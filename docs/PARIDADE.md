@@ -1,5 +1,8 @@
 # Plano de paridade — 29/09/2026
 
+> Este documento preserva o diagnóstico inicial. Para o estado após as migrations de
+> autenticação e do primeiro bloco operacional, consulte [IMPLANTACAO.md](IMPLANTACAO.md).
+
 ## Evidência conferida
 
 - Origem do código: `kph-os-pessoas@657bfb8`, incluindo a aba Orkestri publicada.

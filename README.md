@@ -5,6 +5,9 @@ Cópia independente da aplicação Pessoas, baseada no commit
 
 **Status: base de aplicação preparada; implantação funcional depende da reconstrução do banco e do onboarding do cliente. Não considerar este repositório uma migração de produção concluída.**
 
+Andamento atual: [Implantação e sprints](docs/IMPLANTACAO.md). O primeiro bloco de banco
+operacional já foi aplicado e testado; o aplicativo ainda não está publicado.
+
 O Supabase de destino é `peuqfdgkxkiaszrvpgmq` (Pipou-cardoso). Na conferência de 29/09/2026,
 ele não possuía tabelas no schema `public`. Nenhum cadastro, usuário, documento ou registro de
 folha do cliente de origem foi copiado. Posteriormente foi implantada no destino a base de

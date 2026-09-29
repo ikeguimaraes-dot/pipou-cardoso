@@ -228,4 +228,3 @@ CREATE POLICY cardoso_admin_access ON public.import_logs FOR ALL TO authenticate
  USING ((SELECT public.cardoso_is_admin())) WITH CHECK ((SELECT public.cardoso_is_admin()));
 
 NOTIFY pgrst, 'reload schema';
-

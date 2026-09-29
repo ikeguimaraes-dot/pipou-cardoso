@@ -79,4 +79,3 @@ END $$;
 RESET ROLE;
 ROLLBACK;
 SELECT 'PASS: both admins; insert/update/read; tier trigger; document constraint; unassigned/anon denial; role escalation denied; fixtures rolled back' AS result;
-

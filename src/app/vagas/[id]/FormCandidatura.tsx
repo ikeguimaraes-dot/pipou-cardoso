@@ -2,7 +2,7 @@
 
 import { useTransition, useState, useRef, type ReactNode, type CSSProperties } from 'react'
 import { useRouter } from 'next/navigation'
-import { submitCandidatura } from '../actions'
+
 
 const ESCOLARIDADE_OPTIONS = [
   { value: 'analfabeto', label: 'Não alfabetizado' },
@@ -76,7 +76,8 @@ export function FormCandidatura({
     setError(null)
     const formData = new FormData(e.currentTarget)
     startTransition(async () => {
-      const result = await submitCandidatura(formData)
+      const response = await fetch('/api/portal-pipou/vaga', { method: 'POST', body: formData })
+      const result = await response.json()
       if (!result.success) {
         setError(result.error)
       } else {

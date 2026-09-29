@@ -4,7 +4,7 @@ import "./pipou-login.css";
 import { tenant } from "@/lib/tenant";
 
 /** Uses the original logo and hospitality photograph supplied in the Pipou brand guide. */
-export function PipouLoginScene({ children, recoveryHref = tenant.recoveryUrl }: { children: ReactNode; recoveryHref?: string }) {
+export function PipouLoginScene({ children, recoveryHref = tenant.recoveryUrl, title = "Bom ter você aqui.", description = "Entre na sua conta para continuar." }: { children: ReactNode; recoveryHref?: string; title?: string; description?: string }) {
   return <main className="pipou-login">
     {/* Decorative photograph; the form and all copy remain real, accessible HTML. */}
     {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -24,8 +24,8 @@ export function PipouLoginScene({ children, recoveryHref = tenant.recoveryUrl }:
       </section>
       <section className="pipou-login-card" aria-labelledby="pipou-login-welcome">
         <p className="pipou-login-card-eyebrow"><LockKeyhole size={14} aria-hidden="true" /> Seu espaço PIPOU</p>
-        <h2 id="pipou-login-welcome">Bom ter você aqui.</h2>
-        <p className="pipou-login-card-description">Entre na sua conta para continuar.</p>
+        <h2 id="pipou-login-welcome">{title}</h2>
+        <p className="pipou-login-card-description">{description}</p>
         {children}
         {recoveryHref && <a className="pipou-login-recovery" href={recoveryHref}>Esqueceu sua senha? <ArrowUpRight size={13} aria-hidden="true" /></a>}
         <p className="pipou-login-help">Precisa de acesso? Fale com o responsável<br className="pipou-login-help-break" /> pelo RH da sua unidade.</p>

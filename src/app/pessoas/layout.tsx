@@ -28,6 +28,10 @@ export default async function PessoasLayout({
       <div style={{ display: "flex", height: "100vh" }}>
         <Sidebar tierLevel={tierLevel} approvalsCount={approvalsCount} punchAdjCount={punchAdjCount} />
         <main className="shell-main kph-page-main" style={{ flex: 1, overflowY: "auto", padding: "32px 28px" }}>
+          <div className="mb-6 flex flex-wrap items-center justify-between gap-3 rounded-lg border border-[var(--border)] p-4 text-sm">
+            <span>{units.length ? "Ambiente Cardoso — implantação e validação dos dados" : "Bem-vindo. Cadastre as unidades para começar a organizar sua base."}</span>
+            <a className="font-semibold text-[var(--brand)]" href="/pessoas/configuracao">Configurar unidades →</a>
+          </div>
           {children}
         </main>
       </div>

@@ -1,4 +1,4 @@
-'use server'
+import 'server-only'
 
 import { createServiceClient } from '@kph/db/supabase/server'
 
@@ -17,6 +17,9 @@ export async function submitCandidatura(formData: FormData): Promise<SubmitResul
   const unitId = formData.get('unit_id') as string | null
   if (!jobOpeningId || !unitId) return { success: false, error: 'Vaga inválida.' }
 
+  const { data: opening } = await sb.from('job_openings').select('id, unit_id, status').eq('id', jobOpeningId).maybeSingle()
+  if (!opening || opening.unit_id !== unitId || opening.status !== 'aberta') return { success: false, error: 'Vaga indisponível.' }
+
   const pretensaoRaw = formData.get('pretensao_salarial') as string | null
   const pretensaoSalarial =
     pretensaoRaw && pretensaoRaw !== '' ? parseFloat(pretensaoRaw) : null
@@ -32,6 +35,7 @@ export async function submitCandidatura(formData: FormData): Promise<SubmitResul
   let cvStoragePath: string | null = null
   const cvFile = formData.get('cv') as File | null
   if (cvFile && cvFile.size > 0) {
+    if (cvFile.size > 10485760 || !['application/pdf','application/msword','application/vnd.openxmlformats-officedocument.wordprocessingml.document'].includes(cvFile.type)) return { success: false, error: 'Envie um currículo PDF ou Word de até 10 MB.' }
     const ext = cvFile.name.split('.').pop()?.toLowerCase() ?? 'pdf'
     const path = `${candidateId}/cv.${ext}`
     // eslint-disable-next-line @typescript-eslint/no-explicit-any

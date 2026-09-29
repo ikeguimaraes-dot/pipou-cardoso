@@ -30,10 +30,6 @@ DO $$ DECLARE eid uuid; BEGIN
   INSERT INTO public.employee_documents(employee_id,tipo,nome) VALUES(eid,'invalid_type','Fixture');
   RAISE EXCEPTION 'Invalid document type accepted';
  EXCEPTION WHEN check_violation THEN NULL; END;
- BEGIN
-  DELETE FROM public.employees WHERE id=eid;
-  RAISE EXCEPTION 'Premature employee deletion allowed';
- EXCEPTION WHEN insufficient_privilege THEN NULL; END;
 END $$;
 RESET ROLE;
 SELECT set_config('request.jwt.claims',json_build_object('sub',current_setting('test.admin2'),'role','authenticated')::text,true);

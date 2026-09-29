@@ -83,8 +83,9 @@ export async function registrarPunch(
   }
 
   const isSelf = employee.user_id === effectiveUserId;
-  let canPunchForOthers = false;
-  if (!isSelf) {
+  const currentUser = await getCurrentUser();
+  let canPunchForOthers = !!currentUser?.roles.some(r => r.role === "founder");
+  if (!isSelf && !canPunchForOthers) {
     const { data: roles, error: rolesErr } = await service
       .from("user_roles")
       .select("unit_id")
@@ -170,12 +171,6 @@ export async function registrarPunch(
       const buffer = Buffer.from(base64Data, "base64");
 
       const BUCKET_NAME = "ponto-fotos";
-      const { data: buckets } = await service.storage.listBuckets();
-
-      if (buckets && !buckets.find((b) => b.name === BUCKET_NAME)) {
-        await service.storage.createBucket(BUCKET_NAME, { public: true });
-      }
-
       const fileName = `${employee.id}/${Date.now()}.jpg`;
       const { error: uploadErr } = await service.storage
         .from(BUCKET_NAME)
@@ -185,10 +180,7 @@ export async function registrarPunch(
         });
 
       if (!uploadErr) {
-        const { data: publicUrlData } = service.storage
-          .from(BUCKET_NAME)
-          .getPublicUrl(fileName);
-        photoUrl = publicUrlData.publicUrl;
+        photoUrl = fileName; // Private object path; URLs are signed only when read.
       }
     } catch (err) {
       console.error("[registrarPunch] Falha no upload da foto", err);
@@ -203,7 +195,7 @@ export async function registrarPunch(
     } catch { /* ignore parse err */ }
   }
   if (photoUrl) {
-    deviceInfoObj.photoUrl = photoUrl;
+    deviceInfoObj.photoPath = photoUrl;
   }
   const finalDeviceInfo = Object.keys(deviceInfoObj).length > 0
     ? JSON.stringify(deviceInfoObj)

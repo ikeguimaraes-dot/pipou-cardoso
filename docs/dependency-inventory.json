@@ -24,6 +24,7 @@
       "src/app/pessoas/feedback/actions.ts",
       "src/app/pessoas/gorjetas/actions.ts",
       "src/app/pessoas/horas-extras/actions.ts",
+      "src/app/pessoas/importacao-inicial/actions.ts",
       "src/app/pessoas/importacao-massa/actions.ts",
       "src/app/pessoas/onboarding/actions.ts",
       "src/app/pessoas/organograma/actions.ts",
@@ -127,6 +128,7 @@
     ],
     "units": [
       "src/app/pessoas/avaliacoes/novo/[employeeId]/page.tsx",
+      "src/app/pessoas/importacao-inicial/actions.ts",
       "src/app/pessoas/layout.tsx",
       "src/app/pessoas/recrutamento/actions.ts",
       "src/app/pessoas/vagas/actions.ts",
@@ -136,6 +138,13 @@
       "src/lib/pessoas/headcount-actions.ts",
       "src/lib/pessoas/pendencias-server.ts",
       "lib/kph/auth/unit.ts"
+    ],
+    "climate_surveys": [
+      "src/app/pessoas/clima/actions.ts",
+      "src/lib/pessoas/overview-server.ts"
+    ],
+    "climate_questions": [
+      "src/app/pessoas/clima/actions.ts"
     ],
     "feedbacks": [
       "src/app/pessoas/feedback/actions.ts"
@@ -197,6 +206,7 @@
     ],
     "time_clock_punches": [
       "src/app/pessoas/ponto/actions.ts",
+      "src/app/pessoas/ponto/aprovacoes/actions.ts",
       "src/app/pessoas/ponto/gestao/page.tsx",
       "src/lib/pessoas/actions.ts",
       "src/lib/pessoas/ponto-actions.ts",
@@ -214,6 +224,7 @@
       "src/app/pessoas/recrutamento/actions.ts",
       "src/app/pessoas/vagas/actions.ts",
       "src/app/vagas/[id]/page.tsx",
+      "src/app/vagas/actions.ts",
       "src/app/vagas/page.tsx",
       "src/lib/pessoas/headcount-actions.ts",
       "src/lib/pessoas/orkestri-server.ts",
@@ -322,8 +333,7 @@
       "src/lib/pessoas/ponto-mensal-actions.ts"
     ],
     "terminations": [
-      "src/lib/pessoas/overview-server.ts",
-      "src/lib/pessoas/termination-server.ts"
+      "src/lib/pessoas/overview-server.ts"
     ],
     "payroll_fechamento_periodo": [
       "src/lib/pessoas/payroll-dominio-actions.ts"
@@ -346,6 +356,9 @@
     "get_survey_results": [
       "src/app/pessoas/clima/actions.ts",
       "src/lib/pessoas/overview-server.ts"
+    ],
+    "cardoso_create_unit": [
+      "src/app/pessoas/configuracao/actions.ts"
     ],
     "rpc_payroll_listar_periodos": [
       "src/app/pessoas/contabilidade/actions.ts"
@@ -391,6 +404,12 @@
     ],
     "rpc_payroll_gerar_txt_dominio": [
       "src/lib/pessoas/payroll-dominio-actions.ts"
+    ],
+    "cardoso_terminate_employee": [
+      "src/lib/pessoas/termination-server.ts"
+    ],
+    "cardoso_is_admin": [
+      "src/middleware.ts"
     ]
   },
   "buckets": {
@@ -459,6 +478,7 @@
     ],
     "NEXT_PUBLIC_SUPABASE_URL": [
       "src/app/auth/actions.ts",
+      "src/app/auth/callback/route.ts",
       "src/app/auth/login/page.tsx",
       "src/app/auth/login-action/route.ts",
       "src/app/auth/set-session/route.ts",
@@ -471,6 +491,7 @@
     ],
     "NEXT_PUBLIC_SUPABASE_ANON_KEY": [
       "src/app/auth/actions.ts",
+      "src/app/auth/callback/route.ts",
       "src/app/auth/login/page.tsx",
       "src/app/auth/login-action/route.ts",
       "src/app/auth/set-session/route.ts",
@@ -556,9 +577,13 @@
     "src/app/api/ponto/ahgora-arquivo/route.ts",
     "src/app/api/portal-pipou/candidatura/route.ts",
     "src/app/api/portal-pipou/cargos/route.ts",
+    "src/app/api/portal-pipou/vaga/route.ts",
     "src/app/api/webhooks/twilio-status/route.ts",
+    "src/app/auth/callback/route.ts",
     "src/app/auth/login/page.tsx",
     "src/app/auth/login-action/route.ts",
+    "src/app/auth/recover/page.tsx",
+    "src/app/auth/reset-password/page.tsx",
     "src/app/auth/set-session/route.ts",
     "src/app/auth/sign-out/route.ts",
     "src/app/cadastro/page.tsx",
@@ -586,6 +611,7 @@
     "src/app/pessoas/colaboradores/[id]/page.tsx",
     "src/app/pessoas/colaboradores/novo/page.tsx",
     "src/app/pessoas/colaboradores/page.tsx",
+    "src/app/pessoas/configuracao/page.tsx",
     "src/app/pessoas/contabilidade/page.tsx",
     "src/app/pessoas/disciplina/page.tsx",
     "src/app/pessoas/documentos/page.tsx",
@@ -600,6 +626,7 @@
     "src/app/pessoas/holerites/page.tsx",
     "src/app/pessoas/horas-extras/page.tsx",
     "src/app/pessoas/importacao/page.tsx",
+    "src/app/pessoas/importacao-inicial/page.tsx",
     "src/app/pessoas/importacao-massa/page.tsx",
     "src/app/pessoas/onboarding/[id]/page.tsx",
     "src/app/pessoas/onboarding/novo/page.tsx",

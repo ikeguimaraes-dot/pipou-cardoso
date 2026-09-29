@@ -12,19 +12,6 @@ import type {
 const BUCKET = "employee-documents";
 const TABLE = "employee_documents";
 
-async function ensureBucket(): Promise<void> {
-  const service = createServiceClient();
-  if (!service) return;
-  const { error } = await service.storage.createBucket(BUCKET, {
-    public: false,
-    fileSizeLimit: 10485760,
-  });
-  // Ignore "already exists" — bucket was already created, which is fine.
-  if (error && !error.message.toLowerCase().includes("already exists")) {
-    throw new Error(`Storage bucket error: ${error.message}`);
-  }
-}
-
 async function unitIdsForBrand(brandId: string): Promise<string[]> {
   const service = createServiceClient();
   if (!service) return [];
@@ -149,8 +136,6 @@ export async function uploadDocument(
     const service = createServiceClient();
     if (!supabase || !service) return { ok: false, error: "Serviço indisponível" };
 
-    await ensureBucket();
-
     const employeeId = formData.get("employeeId") as string;
     const tipo = formData.get("tipo") as EmployeeDocumentTipo;
     const nome = formData.get("nome") as string;
@@ -177,7 +162,7 @@ export async function uploadDocument(
       mimeType = file.type;
 
       const buf = await file.arrayBuffer();
-      const { error: uploadErr } = await service.storage
+      const { error: uploadErr } = await supabase.storage
         .from(BUCKET)
         .upload(filePath, buf, { contentType: file.type, upsert: false });
 
@@ -202,7 +187,10 @@ export async function uploadDocument(
       .select()
       .single();
 
-    if (error) return { ok: false, error: error.message };
+    if (error) {
+      if (filePath) await supabase.storage.from(BUCKET).remove([filePath]);
+      return { ok: false, error: error.message };
+    }
     return { ok: true, data: data as EmployeeDocument };
   } catch (e) {
     return { ok: false, error: String(e) };
@@ -230,7 +218,7 @@ export async function getDocumentSignedUrl(
     const path = (doc as unknown as { file_path: string }).file_path;
     if (!path) return { ok: false, error: "Arquivo não anexado" };
 
-    const { data, error } = await service.storage.from(BUCKET).createSignedUrl(path, 3600);
+    const { data, error } = await supabase.storage.from(BUCKET).createSignedUrl(path, 3600);
     if (error || !data) return { ok: false, error: error?.message ?? "Erro ao gerar URL" };
     return { ok: true, data: data.signedUrl };
   } catch (e) {
@@ -254,7 +242,7 @@ export async function deleteDocument(documentId: string): Promise<ActionResult<n
 
     const path = (doc as unknown as { file_path: string } | null)?.file_path;
     if (path) {
-      await service.storage.from(BUCKET).remove([path]);
+      await supabase.storage.from(BUCKET).remove([path]);
     }
 
     const { error } = await supabase.from(TABLE).delete().eq("id", documentId);

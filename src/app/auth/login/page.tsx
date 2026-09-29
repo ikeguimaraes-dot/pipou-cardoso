@@ -10,7 +10,7 @@ import { LoginForm } from "./login-form";
 
 // Só destinos internos — evita open redirect via ?next=
 function safeNext(next: string | string[] | undefined): string {
-  return typeof next === "string" && next.startsWith("/") && !next.startsWith("//")
+  return typeof next === "string" && next.startsWith("/") && !next.startsWith("//") && !/[\\\x00-\x1f]/.test(next)
     ? next
     : "/pessoas";
 }

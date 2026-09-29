@@ -16,3 +16,7 @@ npm-debug.log*
 # Dados operacionais sensíveis — nunca versionados
 Arquivos/
 app.json
+.env*
+
+supabase/.temp/
+next-env.d.ts

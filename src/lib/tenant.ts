@@ -2,7 +2,7 @@
 export const tenant = {
   name: process.env.NEXT_PUBLIC_TENANT_NAME || "Cardoso",
   appName: process.env.NEXT_PUBLIC_APP_NAME || "PIPOU · Cardoso",
-  recoveryUrl: process.env.NEXT_PUBLIC_RECOVERY_URL || "",
+  recoveryUrl: process.env.NEXT_PUBLIC_RECOVERY_URL || "/auth/recover",
 };
 
 export function allowedOrigins(): string[] {

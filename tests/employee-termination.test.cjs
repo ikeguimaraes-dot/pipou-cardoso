@@ -6,7 +6,14 @@ const grant=(name,unit_id='A')=>({unit_id,brand_id:null,group_id:null,roles:{nam
 function fixture(options={}){
  const employee={id,unit_id:'A',ativo:true,status_rh:'ativo',data_admissao:'2026-01-01',data_demissao:null,...options.employee};const calls=[],invalidations=[];
  const tables={employees:[employee],terminations:[],user_roles:options.roles??[grant('pessoas')],units:[{id:'A',active:true,brand_id:'brand',brands:{group_id:'group'}},{id:'B',active:true,brand_id:'other',brands:{group_id:'other'}}]};
- const client={auth:{async getUser(){return {data:{user:options.anonymous?null:{id:'viewer'}},error:null}}},from(table){let filters=[],mutation=null,operation=null,single=false;const chain={select(){return chain},order(){return chain},eq(k,v){if(k!=='user_id')filters.push(r=>r[k]===v);return chain},is(k,v){filters.push(r=>r[k]===v);return chain},maybeSingle(){single=true;return chain},update(patch){operation='update';mutation=patch;calls.push(patch);return chain},insert(patch){operation='insert';mutation={id:'termination-id',...patch};calls.push(patch);return chain},delete(){operation='delete';return chain},then(resolve,reject){
+ const client={async rpc(name,args){
+ assert.equal(name,'cardoso_terminate_employee');calls.push(args);
+ if(options.race){employee.ativo=false;employee.data_demissao='2026-09-10';return {data:null,error:{message:'Already terminated'}}}
+ if(options.rlsDenied||options.writeFailure)return {data:null,error:{message:'Denied'}};
+ employee.ativo=false;employee.status_rh='inativo';employee.data_demissao=args.p_date;
+ tables.terminations.push({employee_id:args.p_employee_id,tipo_aviso:args.p_reason,data_aviso:args.p_date});
+ return {data:'termination-id',error:null};
+ },auth:{async getUser(){return {data:{user:options.anonymous?null:{id:'viewer'}},error:null}}},from(table){let filters=[],mutation=null,operation=null,single=false;const chain={select(){return chain},order(){return chain},eq(k,v){if(k!=='user_id')filters.push(r=>r[k]===v);return chain},is(k,v){filters.push(r=>r[k]===v);return chain},maybeSingle(){single=true;return chain},update(patch){operation='update';mutation=patch;calls.push(patch);return chain},insert(patch){operation='insert';mutation={id:'termination-id',...patch};calls.push(patch);return chain},delete(){operation='delete';return chain},then(resolve,reject){
  if(options.readFailure&&table==='employees'&&!mutation)return Promise.resolve({data:null,error:{message:'read failure'}}).then(resolve,reject);
  if(operation==='insert'){
   if(options.rlsDenied||options.writeFailure)return Promise.resolve({data:null,error:{message:'write failure'}}).then(resolve,reject);

@@ -3,22 +3,21 @@
 Cópia independente da aplicação Pessoas, baseada no commit
 `657bfb83fe28a10d0e8cf246c4b52b5efa2f8275` de `kph-os-pessoas`.
 
-**Status: base de aplicação preparada; implantação funcional depende da reconstrução do banco e do onboarding do cliente. Não considerar este repositório uma migração de produção concluída.**
+**Status: implantação administrativa publicada em https://pipou-cardoso.vercel.app.**
 
-Andamento atual: [Implantação e sprints](docs/IMPLANTACAO.md). O primeiro bloco de banco
-operacional já foi aplicado e testado; o aplicativo ainda não está publicado.
+Banco operacional, armazenamento privado, configuração de unidades e importação inicial
+estão disponíveis. A conciliação de dados reais, SMTP, integrações e liberação de perfis
+restritos continuam pendentes. Veja [Implantação e sprints](docs/IMPLANTACAO.md) e
+[Validação técnica](docs/VALIDACAO-IMPLANTACAO.md).
 
-O Supabase de destino é `peuqfdgkxkiaszrvpgmq` (Pipou-cardoso). Na conferência de 29/09/2026,
-ele não possuía tabelas no schema `public`. Nenhum cadastro, usuário, documento ou registro de
-folha do cliente de origem foi copiado. Posteriormente foi implantada no destino a base de
-acesso (`groups`, `brands`, `units`, `roles`, `user_roles`) e foram provisionados os dois
-administradores solicitados pelo cliente. O banco de origem não foi alterado.
+O ambiente Cardoso é independente. Nenhum dado operacional do cliente de origem foi copiado.
+Credenciais e informações pessoais não devem ser versionadas neste repositório público.
 
 ## Desenvolvimento
 
 1. `npm ci`
 2. Copiar `.env.example` para `.env.local` e configurar as credenciais do destino.
-3. Executar a implantação de banco descrita em [PARIDADE.md](docs/PARIDADE.md).
+3. Aplicar as migrations em `supabase/migrations` na ordem (o destino Cardoso já está atualizado).
 4. `npm run dev` (porta 3002).
 
 Credenciais de servidor ficam exclusivamente no ambiente privado, sem prefixo `NEXT_PUBLIC_`.

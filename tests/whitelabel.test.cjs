@@ -22,16 +22,16 @@ test('customer origins never include the source tenant', () => {
   assert.equal(config.allowedOrigins().join(','), 'https://customer.example.test,https://portal.example.test');
   assert.equal(load('src/lib/tenant.ts', { NODE_ENV: 'production' }).allowedOrigins().length, 0);
 });
-function middleware(env, user) {
+function middleware(env, user, admin = true) {
   let authCalls = 0;
   const response = { next: () => ({ headers: new Map(), cookies: { set() {} }, type: 'next' }),
     json: (body, init) => ({ body, ...init }), redirect: url => ({ redirect: String(url) }) };
   const mod = load('src/middleware.ts', env, {
     'next/server': { NextResponse: response },
-    '@supabase/ssr': { createServerClient: () => ({ auth: { getUser: async () => { authCalls++; return { data: { user } }; } } }) },
+    '@supabase/ssr': { createServerClient: () => ({ rpc: async () => ({data: admin, error: null}), auth: { getUser: async () => { authCalls++; return { data: { user } }; } } }) },
   });
-  const request = pathname => ({ url: `https://customer.example.test${pathname}`, nextUrl: new URL(`https://customer.example.test${pathname}`), headers: new Map(), cookies: { getAll: () => [] }, method: 'GET' });
-  return { run: pathname => mod.middleware(request(pathname)), calls: () => authCalls };
+  const request = (pathname, action = false) => ({ url: `https://customer.example.test${pathname}`, nextUrl: new URL(`https://customer.example.test${pathname}`), headers: new Map(action ? [['next-action','private-action']] : []), cookies: { getAll: () => [] }, method: 'GET' });
+  return { run: (pathname, action) => mod.middleware(request(pathname, action)), calls: () => authCalls };
 }
 const configured = { NEXT_PUBLIC_SUPABASE_URL: 'https://tenant.example.test', NEXT_PUBLIC_SUPABASE_ANON_KEY: 'test' };
 test('anonymous private pages use local login and APIs return 401', async () => {
@@ -90,4 +90,15 @@ test('payroll without period searches only the current authorized unit', async (
   const f = payrollFixture();
   assert.equal((await f.code.exportTxtDominio(null, '09/2026')).ok, true);
   assert(f.calls.some(call => call.table === 'payroll_fechamento_periodo' && call.key === 'unit_id' && call.value === 'customer-unit'));
+});
+
+test('signed-in account without admin grant is denied', async () => {
+  const m = middleware(configured, {id: 'unassigned'}, false);
+  assert.equal((await m.run('/pessoas')).status, 403);
+});
+test('public page cannot be used to invoke a private Server Action', async () => {
+  const m = middleware(configured, null);
+  assert.equal((await m.run('/vagas')).type, 'next');
+  assert.match((await m.run('/vagas', true)).redirect, /auth\/login/);
+  assert.equal((await middleware(configured, {id:'unassigned'},false).run('/auth/login',true)).status, 403);
 });

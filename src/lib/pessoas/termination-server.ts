@@ -51,25 +51,10 @@ export async function terminateEmployee(id: string, date: string, reason: Termin
     if (employee.data_admissao && date < employee.data_admissao) {
       return { ok: false, error: "A data de desligamento não pode ser anterior à admissão." };
     }
-    const { data: termination, error: terminationError } = await client.from("terminations")
-      .insert({
-        unit_id: employee.unit_id,
-        employee_id: employee.id,
-        nome: `${employee.nome ?? ""} ${employee.sobrenome ?? ""}`.trim(),
-        tipo_aviso: reasonDefinition.value,
-        data_aviso: date,
-        motivo: reasonDefinition.label,
-        status: "registrado",
-      } as never).select("id").maybeSingle();
-    if (terminationError || !termination) return { ok: false, error: "Não foi possível registrar o motivo do desligamento. Tente novamente." };
-    const { data, error } = await client.from("employees")
-      .update({ ativo: false, status_rh: "inativo", data_demissao: date, updated_at: new Date().toISOString() } as never)
-      .eq("id", id).eq("unit_id", employee.unit_id).eq("ativo", true).is("data_demissao", null)
-      .select("id").maybeSingle();
-    if (error || !data) {
-      await client.from("terminations").delete().eq("id", termination.id);
-      return { ok: false, error: "Desligamento não salvo. Confira sua permissão ou atualize a página e tente novamente." };
-    }
+    const { error } = await client.rpc("cardoso_terminate_employee" as never, {
+      p_employee_id: employee.id, p_date: date, p_reason: reason,
+    } as never);
+    if (error) return { ok: false, error: "Não foi possível salvar o desligamento. Atualize a página e confira os dados." };
     revalidatePath("/pessoas", "layout");
     return { ok: true, data: null };
   } catch (error) {

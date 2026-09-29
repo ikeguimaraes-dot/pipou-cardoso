@@ -15,7 +15,8 @@ export async function middleware(req: NextRequest) {
     Vary: "Origin",
   } : {};
   if (req.method === "OPTIONS") return new NextResponse(null, { status: 204, headers: cors });
-  if (PUBLIC_PREFIXES.some(prefix => pathname.startsWith(prefix)) || PUBLIC_PAGES.some(page => pathname === page || pathname.startsWith(`${page}/`))) return NextResponse.next();
+  const serverAction = req.headers.has("next-action");
+  if (!serverAction && (PUBLIC_PREFIXES.some(prefix => pathname.startsWith(prefix)) || PUBLIC_PAGES.some(page => pathname === page || pathname.startsWith(`${page}/`)))) return NextResponse.next();
   const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
   const anonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
   if (!url || !anonKey) return NextResponse.json({ error: "Ambiente ainda não configurado." }, { status: 503 });
@@ -35,9 +36,15 @@ export async function middleware(req: NextRequest) {
     login.searchParams.set("next", pathname + req.nextUrl.search);
     return NextResponse.redirect(login);
   }
+  // Initial client release is restricted to the two global administrators.
+  // Legacy service-role actions must not be reachable by an unassigned account,
+  // including a Server Action posted to a public page.
+  const { data: admin, error: roleError } = await supabase.rpc("cardoso_is_admin");
+  if (roleError || admin !== true) return NextResponse.json({ error: "Acesso operacional ainda não liberado para este perfil." }, { status: 403 });
   for (const [key, value] of Object.entries(cors)) res.headers.set(key, value);
   return res;
 }
 export const config = {
-  matcher: ["/((?!_next/static|_next/image|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp|woff2?|ttf)$).*)"],
+  matcher: ["/((?!_next/static|_next/image|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp|woff2?|ttf)$).*)",
+    { source: "/:path*", has: [{ type: "header", key: "next-action" }] }],
 };

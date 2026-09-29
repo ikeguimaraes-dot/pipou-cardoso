@@ -9,7 +9,7 @@ function walk(dir) {
 const files = [...walk('src'), ...walk('lib')];
 const inventory = { tables: {}, rpcs: {}, buckets: {}, environment: {}, routes: [] };
 const patterns = {
-  tables: /\.from\(\s*['"]([^'"]+)['"]\s*\)/g,
+  tables: /\.from\(\s*['"]([^'"]+)['"](?:\s+as\s+\w+)?\s*\)/g,
   rpcs: /\.rpc\(\s*['"]([^'"]+)['"]/g,
   buckets: /\.storage\s*\.from\(\s*['"]([^'"]+)['"]/g,
   environment: /process\.env\.([A-Z][A-Z0-9_]+)/g,

@@ -1,7 +1,7 @@
 # Plano de paridade — 29/09/2026
 
 > Este documento preserva o diagnóstico inicial. Para o estado após as migrations de
-> autenticação e do primeiro bloco operacional, consulte [IMPLANTACAO.md](IMPLANTACAO.md).
+> implantação operacional publicada, consulte [IMPLANTACAO.md](IMPLANTACAO.md).
 
 ## Evidência conferida
 

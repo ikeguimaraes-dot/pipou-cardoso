@@ -7,7 +7,9 @@ Cópia independente da aplicação Pessoas, baseada no commit
 
 O Supabase de destino é `peuqfdgkxkiaszrvpgmq` (Pipou-cardoso). Na conferência de 29/09/2026,
 ele não possuía tabelas no schema `public`. Nenhum cadastro, usuário, documento ou registro de
-folha do cliente de origem foi copiado. Não foram executadas alterações nos dois bancos.
+folha do cliente de origem foi copiado. Posteriormente foi implantada no destino a base de
+acesso (`groups`, `brands`, `units`, `roles`, `user_roles`) e foram provisionados os dois
+administradores solicitados pelo cliente. O banco de origem não foi alterado.
 
 ## Desenvolvimento
 

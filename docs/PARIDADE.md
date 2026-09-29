@@ -80,6 +80,22 @@ Não executamos migration no destino, cópia de registros, criação de usuário
 ativação de agentes, publicação de site ou fechamento/exportação real de folha. O repositório
 é a base isolada para implantação, não um ambiente operacional homologado.
 
+### Atualização — provisionamento inicial de acesso
+
+Após a entrega da base, foi aplicada a migration `cardoso_auth_foundation` no destino:
+`groups`, `brands`, `units`, `roles`, `user_roles`, FKs, índices, RLS e grants de leitura.
+O grupo Cardoso e o papel global `founder` foram cadastrados. Dois usuários solicitados
+foram criados via API administrativa de Auth, confirmados e vinculados a esse papel.
+Credenciais, e-mails e UUIDs das contas não são incluídos no repositório público.
+
+As tabelas de permissões não permitem escrita ao papel `authenticated`; cada usuário
+lê seus próprios vínculos, sem poder conceder acesso a si mesmo. O papel global é
+reconhecido pelo aplicativo como administração completa do ambiente Cardoso.
+
+Essa etapa não cria casas fictícias nem implanta os módulos operacionais. As próximas
+migrations devem considerar as cinco tabelas já existentes, preservar os usuários e
+conceder ao papel global a cobertura adequada nas políticas dos módulos implantados.
+
 ## Validação da base entregue
 
 - `npm ci --ignore-scripts --no-audit --no-fund`: concluído.

@@ -12,6 +12,7 @@
 - Login administrativo real no navegador: dashboard, Orkestri, pendências, vagas e configuração carregados sem erros JavaScript.
 - Recuperação: conta temporária, link de recuperação, formulário de nova senha, encerramento de sessão e login com nova senha validados; conta removida. Não foi enviado e-mail no teste.
 - Storage: upload de PDF com sessão administrativa, leitura assinada, acesso público negado e remoção do objeto.
+- Última versão publicada: build e TypeScript aprovados; os dois administradores entraram pela tela e acessaram a importação inicial. Lote sintético conferido sem escrita na prévia, importado após confirmação e relido no banco com CPF/salário corretos. Colaborador, unidade e marca de teste removidos em seguida.
 - Advisor de segurança Supabase sem alertas após ativar proteção contra senhas vazadas.
 
 ## Repetir verificações locais

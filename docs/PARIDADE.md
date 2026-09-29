@@ -79,3 +79,19 @@ A chave de servidor nunca é alternativa no navegador. Nenhuma chave é versiona
 Não executamos migration no destino, cópia de registros, criação de usuários, envio de mensagens,
 ativação de agentes, publicação de site ou fechamento/exportação real de folha. O repositório
 é a base isolada para implantação, não um ambiente operacional homologado.
+
+## Validação da base entregue
+
+- `npm ci --ignore-scripts --no-audit --no-fund`: concluído.
+- `npx tsc --noEmit --incremental`: passou.
+- Testes Orkestri, Pendências, JD e white label: 34 passaram.
+- `npm run build`: passou, incluindo geração de páginas e checagem TypeScript.
+- Servidor de produção local: `/auth/login` respondeu 200 com título `PIPOU · Cardoso`;
+  `/pessoas` sem sessão redirecionou para o login local; API privada respondeu 401.
+- Varredura dos arquivos versionados: nenhuma credencial JWT/publishable/secret encontrada.
+- 142 arquivos estáticos gerados para o navegador conferidos: chave de servidor ausente.
+- Supabase público: autenticação respondeu 200; consulta da tabela `units` retornou
+  `PGRST205`, confirmando que a implantação do schema continua pendente.
+
+Esses testes validam a base de código e o login público. Não validam ainda os fluxos completos
+com usuários e dados Cardoso, pois o banco funcional e o onboarding não foram implantados.

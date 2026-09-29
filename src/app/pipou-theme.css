@@ -1,0 +1,96 @@
+/*
+ * Pipou Academy — visual-only skin for this Pessoas zone.
+ * Original assets: Arquivos/00. LAYOUT (Pipou-Branding-AGO26).
+ * Yellow comes from the supplied PNG (#FCD616); charcoal from the PDF (#231F20).
+ * Legacy variable names remain aliases so existing components keep their behavior.
+ * Root scope also covers dialogs, selects and toasts portaled into document.body.
+ */
+:root[data-brand="pipou"] {
+  --pipou-yellow: #fcd616;
+  --pipou-charcoal: #231f20;
+  --pipou-white: #ffffff;
+
+  --font-display: var(--font-body);
+  --font-heading: var(--font-body), Arial, sans-serif;
+  --font-geist-sans: var(--font-body), Arial, sans-serif;
+
+  --background: var(--pipou-charcoal);
+  --foreground: var(--pipou-white);
+  --card: #282425;
+  --card-foreground: var(--pipou-white);
+  --popover: #302c2d;
+  --popover-foreground: var(--pipou-white);
+  --primary: var(--pipou-yellow);
+  --primary-foreground: var(--pipou-charcoal);
+  --secondary: #302c2d;
+  --secondary-foreground: var(--pipou-white);
+  --muted: #302c2d;
+  --muted-foreground: #b9b2b4;
+  --accent: rgba(252, 214, 22, 0.12);
+  --accent-foreground: var(--pipou-yellow);
+  --border: #413b3d;
+  --input: #51494c;
+  --ring: var(--pipou-yellow);
+
+  --sidebar: var(--pipou-charcoal);
+  --sidebar-foreground: var(--pipou-white);
+  --sidebar-primary: var(--pipou-yellow);
+  --sidebar-primary-foreground: var(--pipou-charcoal);
+  --sidebar-accent: rgba(252, 214, 22, 0.10);
+  --sidebar-accent-foreground: var(--pipou-yellow);
+  --sidebar-border: #413b3d;
+  --sidebar-ring: var(--pipou-yellow);
+
+  --bg: var(--pipou-charcoal);
+  --surface: #282425;
+  --surface-2: #302c2d;
+  --surface-3: #393436;
+  --text: var(--pipou-white);
+  --text-2: #d1cacc;
+  --text-3: #b9b2b4;
+  --border-strong: #655c60;
+  --brasa: var(--pipou-yellow);
+  --ouro: var(--pipou-yellow);
+  --carvao: var(--pipou-charcoal);
+  --creme: var(--pipou-white);
+  --brand: var(--pipou-yellow);
+  --brand-soft: rgba(252, 214, 22, 0.10);
+  --brand-border: rgba(252, 214, 22, 0.30);
+  --brand-strong: #e2bf13;
+  --brand-secondary: var(--pipou-yellow);
+  --brand-secondary-soft: rgba(252, 214, 22, 0.10);
+  --chart-1: var(--pipou-yellow);
+}
+
+html[data-brand="pipou"] .kph-page-main {
+  background: var(--background);
+}
+
+html[data-brand="pipou"] :where(button, input, select, textarea) {
+  font-family: var(--font-body), Arial, sans-serif;
+}
+
+html[data-brand="pipou"] ::selection {
+  background: var(--pipou-yellow);
+  color: var(--pipou-charcoal);
+}
+
+/* Visual focus only: no size, positioning, visibility or pointer behavior changes. */
+html[data-brand="pipou"] :where(button, a, input, select, textarea):focus-visible {
+  /* Legacy inputs use inline outline:none; restore focus only for keyboard use. */
+  outline: 2px solid var(--ring) !important;
+  outline-offset: 3px;
+}
+
+.pipou-brand-center {
+  margin-inline: auto;
+}
+
+.pipou-brand-caption {
+  margin-top: 12px;
+  color: var(--text-3);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+}

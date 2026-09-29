@@ -1,0 +1,40 @@
+.vagas-kpis{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));margin:0 0 28px;padding:8px 0 24px;border-bottom:1px solid var(--border);gap:24px}
+.vagas-kpi{padding-left:20px;border-left:1px solid var(--border)}
+.vagas-kpi:first-child{padding-left:0;border-left:0}
+.vagas-kpi div{font-size:12px;color:var(--text-3);margin-bottom:10px}
+.vagas-kpi strong{font-size:28px;line-height:1;font-weight:600;letter-spacing:-.6px;color:var(--text);font-variant-numeric:tabular-nums}
+.vagas-navigation{display:flex;justify-content:space-between;align-items:center;gap:16px;margin-bottom:24px}
+.vagas-tabs{display:flex;gap:24px;align-self:stretch}
+.vagas-tabs button{background:none;border:0;border-bottom:2px solid transparent;padding:12px 0;color:var(--text-3);font-size:13px;cursor:pointer}
+.vagas-tabs button[aria-pressed=true]{color:var(--text);border-bottom-color:var(--text);font-weight:600}
+.vagas-new{display:flex;align-items:center;gap:7px;padding:11px 17px;border:0;border-radius:7px;background:var(--brand);color:var(--primary-foreground);font-size:13px;font-weight:600;cursor:pointer;white-space:nowrap}
+.vagas-toolbar{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.vagas-toolbar input,.vagas-toolbar select,.vagas-table select{font:inherit;font-size:12px;min-height:38px;padding:8px 10px;color:var(--text-2);background:var(--surface);border:1px solid var(--border);border-radius:6px;max-width:100%}
+.vagas-toolbar input{flex:1 1 250px;min-width:0}
+.vagas-toolbar input::placeholder{color:var(--text-3)}
+.vagas-toolbar select{flex:0 1 auto}
+.vagas-list-caption{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:20px 0 12px;color:var(--text-3);font-size:12px}
+.vagas-overdue-filter{color:var(--text-2);background:none;border:1px solid var(--border);padding:7px 10px;border-radius:6px;font-size:12px;cursor:pointer}
+.vagas-overdue-filter[aria-pressed=true]{border-color:var(--text);color:var(--text)}
+.vagas-table-scroll{width:100%;overflow-x:auto;border:1px solid var(--border);border-radius:10px}
+.vagas-table{width:100%;min-width:930px;border-collapse:collapse;text-align:left;background:var(--surface)}
+.vagas-table th{font-size:10px;font-weight:600;letter-spacing:.8px;text-transform:uppercase;color:var(--text-3);padding:14px 16px;border-bottom:1px solid var(--border);white-space:nowrap}
+.vagas-table td{padding:20px 16px;font-size:12px;color:var(--text-2);vertical-align:top;border-bottom:1px solid var(--border)}
+.vagas-table tr:last-child td{border-bottom:0}
+.vagas-table tbody tr:hover{background:var(--surface-2)}
+.vagas-role-cell{width:27%;min-width:210px}
+.vagas-role-title{font-size:14px;font-weight:600;color:var(--text);margin-bottom:4px}
+.vagas-secondary{font-size:11px;color:var(--text-3);line-height:1.5;margin-top:5px}
+.vagas-details{margin-top:8px;font-size:11px;color:var(--text-3)}
+.vagas-details summary{cursor:pointer;width:fit-content;padding:4px 0}
+.vagas-details dl{margin:12px 0 0;max-width:270px;line-height:1.5}
+.vagas-details dt{font-weight:600;color:var(--text-2);margin-top:8px}
+.vagas-details dd{margin:2px 0 0;white-space:pre-wrap;overflow-wrap:anywhere}
+.vagas-table select{min-height:34px;font-size:11px;cursor:pointer;background:transparent}
+.vagas-table select:disabled{opacity:.6;cursor:default}
+.vagas-neutral-status{display:inline-block;padding:8px 0;font-size:11px;color:var(--text-3)}
+.vagas-deadline{font-variant-numeric:tabular-nums;min-width:170px;line-height:1.5}
+.vagas-overdue,.vagas-error{color:#f49a9a;font-weight:500}
+.vagas-pipeline{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:7px 0;min-width:48px;min-height:34px;background:none;border:0;color:var(--text-2);font-size:13px;font-variant-numeric:tabular-nums;cursor:pointer}
+.vagas-pipeline:hover{color:var(--text);text-decoration:underline}
+@media(max-width:700px){.vagas-kpis{grid-template-columns:repeat(2,minmax(0,1fr));gap:20px}.vagas-kpi:nth-child(3){border-left:0;padding-left:0}.vagas-navigation{align-items:flex-start;flex-wrap:wrap}.vagas-tabs{gap:20px}.vagas-toolbar select{flex:1 1 120px;min-width:0}.vagas-toolbar input{flex-basis:100%}.vagas-table td{padding:16px 12px}.vagas-list-caption{align-items:center}.vagas-new{min-height:44px}}

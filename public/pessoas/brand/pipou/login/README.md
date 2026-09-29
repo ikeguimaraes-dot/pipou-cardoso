@@ -1,0 +1,1 @@
+PIPOU login assets: logo original Pipou-02.png; fotografia original extraída da página 8 do material fornecido Pipou-Branding-AGO26 (1).pdf; fontes Raleway fornecidas em Fonts/Raleway. Sem recriação de logo ou fotografia. Amarelo #FCD616 e carvão #231F20.

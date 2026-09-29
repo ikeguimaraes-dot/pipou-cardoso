@@ -1,0 +1,49 @@
+@font-face{font-family:PipouLogin;src:url('/pessoas/brand/pipou/login/Raleway-Regular.ttf') format('truetype');font-style:normal;font-weight:400;font-display:swap}
+@font-face{font-family:PipouLogin;src:url('/pessoas/brand/pipou/login/Raleway-SemiBold.ttf') format('truetype');font-style:normal;font-weight:500 800;font-display:swap}
+.pipou-login{box-sizing:border-box;position:relative;isolation:isolate;min-height:100svh;overflow:hidden;background:#231f20;color:#fff;font-family:PipouLogin,Arial,sans-serif;display:flex;flex-direction:column;padding:40px 5vw 24px;color-scheme:dark}
+.pipou-login *{box-sizing:border-box}
+.pipou-login-photo{position:absolute;z-index:-3;right:0;top:0;width:72%;height:100%;object-fit:cover;object-position:50% 44%;mask-image:linear-gradient(90deg,transparent,#000 20%)}
+.pipou-login-shade{position:absolute;inset:0;z-index:-2;background:linear-gradient(90deg,#231f20 0%,rgba(35,31,32,.97) 23%,rgba(35,31,32,.72) 48%,rgba(35,31,32,.14) 77%,rgba(35,31,32,.22)),linear-gradient(0deg,rgba(35,31,32,.75),transparent 30%,transparent 75%,rgba(35,31,32,.35))}
+.pipou-login-header{display:flex;align-items:center;justify-content:space-between;gap:24px;width:100%;margin:0 auto;max-width:1680px}
+.pipou-login-logo{display:block;width:195px;height:auto;max-width:50%}
+.pipou-login-header>span{text-transform:uppercase;font-size:10px;letter-spacing:.18em;font-weight:600;color:#f8f6ef}
+.pipou-login-content{flex:1;width:100%;max-width:1380px;margin:0 auto;display:grid;grid-template-columns:minmax(0,1fr) 410px;gap:6vw;align-items:center;padding:48px 0 60px}
+.pipou-login-story{padding:35px 0 20px}
+.pipou-login-eyebrow{margin:0 0 30px;display:flex;align-items:center;gap:12px;text-transform:uppercase;font-size:11px;font-weight:600;letter-spacing:.19em;color:#fcd616}
+.pipou-login-eyebrow>span{width:28px;height:1px;background:currentColor}
+.pipou-login-story h1{font:400 clamp(40px,4.1vw,68px)/1.12 PipouLogin,Arial,sans-serif;letter-spacing:-.055em;margin:0;color:#fff;text-wrap:balance}
+.pipou-login-story h1 em{font-style:normal;color:#fcd616}
+.pipou-login-description{font-size:14px;line-height:1.9;color:#ded9d5;margin:28px 0 0;max-width:430px}
+.pipou-login-signature{display:flex;gap:22px;margin-top:50px;padding-top:20px;border-top:1px solid #ffffff26;width:fit-content;max-width:100%;font-size:9px;letter-spacing:.04em;color:#bfb8b5}
+.pipou-login-card{--text:#231f20;--text-2:#494440;--text-3:#68635d;--surface-2:#fff;--surface-hover:#f0ede7;--border-soft:#d6d0c7;--brand:#fcd616;--brand-strong:#efc900;--kph-creme:#231f20;--color-danger:#a52626;--color-danger-bg:#fff0ee;color-scheme:light;color:#231f20;background:#faf9f6;border:1px solid #fff9;border-radius:12px;padding:36px 36px 26px;box-shadow:0 24px 85px #0004;width:100%}
+.pipou-login-card-eyebrow{display:flex;align-items:center;gap:9px;margin:0 0 20px;text-transform:uppercase;font-size:9px;letter-spacing:.16em;font-weight:600;color:#736e65}
+.pipou-login-card h2{font:500 29px/1.2 PipouLogin,Arial,sans-serif;letter-spacing:-.045em;margin:0 0 12px}
+.pipou-login-card-description{font-size:13px;line-height:1.6;color:#68635d;margin:0 0 28px}
+.pipou-login-form{display:flex;flex-direction:column;gap:18px}
+.pipou-login-form>div{display:flex;flex-direction:column;gap:7px}
+.pipou-login-form label{font:600 12px/1.5 PipouLogin,Arial,sans-serif;color:#494440}
+.pipou-login-form input:not([type=checkbox]){height:50px;border-radius:5px;width:100%;border:1px solid #d6d0c7;background:#fff;color:#231f20;padding:0 13px;font:400 14px PipouLogin,Arial,sans-serif;outline:none;transition:border-color .15s,box-shadow .15s}
+.pipou-login-form input::placeholder{color:#8a8379;opacity:1}
+.pipou-login-form input:focus-visible{box-shadow:0 0 0 3px #fcd61655;border-color:#857000!important}
+.pipou-login-form input[type=password],.pipou-login-form input[name=password]{padding-right:50px}
+.pipou-login-form .relative,.pipou-login-password{position:relative}
+.pipou-login-form button[type=button]{position:absolute;top:50%;right:3px;transform:translateY(-50%);min-width:44px;min-height:44px;border:0;background:transparent;display:flex;align-items:center;justify-content:center;color:#777166;border-radius:4px;cursor:pointer}
+.pipou-login-form button[type=submit]{height:50px;border:0;border-radius:5px;background:#fcd616;color:#231f20;font:600 14px PipouLogin,Arial,sans-serif;display:flex;align-items:center;justify-content:space-between;padding:0 17px;margin-top:2px;cursor:pointer;transition:background .15s}
+.pipou-login-form button[type=submit]:hover{background:#efc900}
+.pipou-login-form button:disabled{opacity:.65;cursor:wait}
+.pipou-login-form>label{display:flex;align-items:center;gap:8px;font-weight:400;min-height:24px}
+.pipou-login-form input[type=checkbox]{accent-color:#857000;width:16px;height:16px}
+.pipou-login-form [role=alert]{background:#fff0ee;color:#a52626;border:1px solid #d7a3a0;border-radius:5px;padding:10px 12px;font-size:12px;line-height:1.5}
+.pipou-login-recovery{display:flex;align-items:center;justify-content:center;gap:5px;min-height:44px;font-size:12px;color:#514b42;text-decoration:none;margin-top:7px}
+.pipou-login-recovery:hover{text-decoration:underline}
+.pipou-login-help{font-size:11px;line-height:1.8;color:#777166;text-align:center;margin:12px 0 24px}
+.pipou-login-card-footer{padding-top:20px;border-top:1px solid #ded8ce;display:flex;justify-content:space-between;align-items:center;gap:10px;font-size:8px;letter-spacing:.035em}
+.pipou-login-card-footer strong{font-weight:600}.pipou-login-card-footer>span{color:#777166}
+.pipou-login-footer{display:flex;justify-content:space-between;gap:24px;max-width:1680px;width:100%;margin:0 auto;font-size:9px;line-height:1.7;color:#c6bfba}
+.pipou-login-footer>span:last-child{display:flex;align-items:center;gap:11px}.pipou-login-footer i{width:3px;height:3px;border-radius:50%;background:#fcd616}
+.pipou-login :is(a,button):focus-visible{outline:2px solid #857000;outline-offset:4px}
+.pipou-login-success{font-size:12px;line-height:1.5;color:#276238;background:#edf6ee;border:1px solid #bed7c2;border-radius:5px;padding:10px;margin-top:14px}
+@media(min-width:1600px){.pipou-login-content{grid-template-columns:minmax(0,1fr) 440px;gap:9vw}.pipou-login-card{padding:44px 42px 30px}.pipou-login-story h1{font-size:66px}}
+@media(max-width:1050px){.pipou-login{padding:30px 4vw 22px}.pipou-login-content{gap:35px;grid-template-columns:minmax(0,1fr) 370px;padding:55px 0}.pipou-login-card{padding:30px 27px 25px}.pipou-login-story h1{font-size:43px}.pipou-login-signature{gap:12px;font-size:8px}.pipou-login-footer>span:first-child{max-width:340px}}
+@media(max-width:760px){.pipou-login{padding:25px 24px 22px;min-height:100svh}.pipou-login-header>span{display:none}.pipou-login-logo{width:165px;max-width:70%}.pipou-login-photo{width:100%;height:560px;mask-image:none;object-position:60% 22%}.pipou-login-shade{background:linear-gradient(0deg,#231f20 35%,#231f2040 100%),linear-gradient(90deg,#231f20eb,#231f2033)}.pipou-login-content{display:flex;flex-direction:column;gap:30px;padding:48px 0 35px;align-items:stretch;max-width:440px}.pipou-login-story{padding:0}.pipou-login-eyebrow{font-size:9px;margin-bottom:18px}.pipou-login-story h1{font-size:clamp(32px,6.4vw,43px);letter-spacing:-.05em}.pipou-login-description{font-size:12px;margin-top:20px}.pipou-login-signature{display:none}.pipou-login-card{padding:30px 26px 24px;border-radius:10px}.pipou-login-card h2{font-size:27px}.pipou-login-footer{max-width:440px;display:block;font-size:9px}.pipou-login-footer>span:last-child{margin-top:10px}.pipou-login-help-break{display:none}}
+@media(prefers-reduced-motion:reduce){.pipou-login *{transition:none!important;animation:none!important}}

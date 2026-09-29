@@ -1,0 +1,67 @@
+import type { Employee } from "@kph/db/types/pessoas";
+import type { EmployeeFormInput } from "@/lib/pessoas/schema";
+
+/** Converte um Employee do banco para os defaultValues do EmployeeForm.
+ *  Mantido fora do "use client" para poder ser chamado em Server Components. */
+export function employeeToFormDefaults(e: Employee): EmployeeFormInput {
+  return {
+    nome: e.nome,
+    sobrenome: e.sobrenome,
+    funcao: e.funcao,
+    salario_base: Number(e.salario_base) as unknown as number,
+    data_admissao: e.data_admissao.slice(0, 10),
+    cpf: e.cpf ?? "",
+    rg: e.rg ?? "",
+    rg_orgao: e.rg_orgao ?? "",
+    rg_uf: e.rg_uf ?? "",
+    pis: e.pis ?? "",
+    ctps: e.ctps ?? "",
+    ctps_serie: e.ctps_serie ?? "",
+    ctps_uf: e.ctps_uf ?? "",
+    titulo_eleitor: e.titulo_eleitor ?? "",
+    reservista: e.reservista ?? "",
+    cep: e.cep ?? "",
+    rua: e.rua ?? "",
+    numero: e.numero ?? "",
+    complemento: e.complemento ?? "",
+    bairro: e.bairro ?? "",
+    cidade: e.cidade ?? "",
+    estado: e.estado ?? "",
+    escolaridade: e.escolaridade ?? "",
+    raca: e.raca ?? "",
+    genero: e.genero ?? "",
+    nome_mae: e.nome_mae ?? "",
+    nome_pai: e.nome_pai ?? "",
+    departamento: e.departamento ?? "",
+    banco: e.banco ?? "",
+    agencia: e.agencia ?? "",
+    conta: e.conta ?? "",
+    tipo_conta:
+      e.tipo_conta === "corrente" || e.tipo_conta === "poupanca" || e.tipo_conta === "salario"
+        ? e.tipo_conta
+        : "",
+    pix: e.pix ?? "",
+    employee_code: e.employee_code ?? "",
+    esocial_code: e.esocial_code ?? "",
+    nome_social: e.nome_social ?? "",
+    data_nascimento: e.data_nascimento?.slice(0, 10) ?? "",
+    cidade_nascimento: e.cidade_nascimento ?? "",
+    uf_nascimento: e.uf_nascimento ?? "",
+    pais_nascimento: e.pais_nascimento ?? "Brasil",
+    estado_civil: e.estado_civil ?? "",
+    tipo_contrato: e.tipo_contrato ?? "CLT",
+    jornada: e.jornada ?? "",
+    status_rh: e.status_rh ?? "ativo",
+    telefone: e.telefone ?? "",
+    email: e.email ?? "",
+    photo_url: e.photo_url ?? "",
+    contato_emergencia_nome: e.contato_emergencia_nome ?? "",
+    contato_emergencia_tel: e.contato_emergencia_tel ?? "",
+    zona_eleitoral: e.zona_eleitoral ?? "",
+    secao_eleitoral: e.secao_eleitoral ?? "",
+    rne: e.rne ?? "",
+    rne_orgao: e.rne_orgao ?? "",
+    rne_expedicao: e.rne_expedicao?.slice(0, 10) ?? "",
+    ctps_expedicao: e.ctps_expedicao?.slice(0, 10) ?? "",
+  };
+}

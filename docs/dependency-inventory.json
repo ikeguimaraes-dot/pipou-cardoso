@@ -1,0 +1,644 @@
+{
+  "tables": {
+    "agent_conversations": [
+      "src/app/api/agentes/[agent]/status/route.ts",
+      "src/app/api/pessoas/agentes/metrics/route.ts",
+      "src/app/pessoas/agentes/[agent]/page.tsx"
+    ],
+    "candidate_agendamentos": [
+      "src/app/api/google-backfill-meet/route.ts",
+      "src/app/pessoas/recrutamento/actions.ts"
+    ],
+    "payslips": [
+      "src/app/api/holerites/pdf/route.ts",
+      "src/lib/pessoas/actions.ts",
+      "src/lib/pessoas/pendencias-server.ts"
+    ],
+    "employees": [
+      "src/app/api/holerites/pdf/route.ts",
+      "src/app/pessoas/agentes/[agent]/page.tsx",
+      "src/app/pessoas/analytics/actions.ts",
+      "src/app/pessoas/atestados/actions.ts",
+      "src/app/pessoas/avaliacoes/actions.ts",
+      "src/app/pessoas/faltas/actions.ts",
+      "src/app/pessoas/feedback/actions.ts",
+      "src/app/pessoas/gorjetas/actions.ts",
+      "src/app/pessoas/horas-extras/actions.ts",
+      "src/app/pessoas/importacao-massa/actions.ts",
+      "src/app/pessoas/onboarding/actions.ts",
+      "src/app/pessoas/organograma/actions.ts",
+      "src/app/pessoas/pdi/actions.ts",
+      "src/app/pessoas/pendencias/actions.ts",
+      "src/app/pessoas/ponto/actions.ts",
+      "src/app/pessoas/ponto/gestao/page.tsx",
+      "src/app/pessoas/recrutamento/actions.ts",
+      "src/app/pessoas/reunioes/actions.ts",
+      "src/app/pessoas/vagas/actions.ts",
+      "src/lib/pessoas/access-requests.ts",
+      "src/lib/pessoas/actions.ts",
+      "src/lib/pessoas/document-actions.ts",
+      "src/lib/pessoas/headcount-actions.ts",
+      "src/lib/pessoas/import-actions.ts",
+      "src/lib/pessoas/orkestri-server.ts",
+      "src/lib/pessoas/overview-server.ts",
+      "src/lib/pessoas/payroll-dominio-actions.ts",
+      "src/lib/pessoas/pendencias-server.ts",
+      "src/lib/pessoas/ponto-actions.ts",
+      "src/lib/pessoas/score-monthly.ts",
+      "src/lib/pessoas/termination-server.ts"
+    ],
+    "candidatos_maya": [
+      "src/app/api/pessoas/agentes/metrics/route.ts",
+      "src/app/api/pessoas/recrutamento/sync-maya/route.ts",
+      "src/app/pessoas/agentes/[agent]/page.tsx"
+    ],
+    "theo_tickets": [
+      "src/app/api/pessoas/agentes/metrics/route.ts",
+      "src/app/pessoas/agentes/[agent]/page.tsx"
+    ],
+    "agent_metrics": [
+      "src/app/api/pessoas/agentes/metrics/route.ts",
+      "src/app/pessoas/agentes/[agent]/page.tsx"
+    ],
+    "candidates": [
+      "src/app/api/pessoas/recrutamento/sync-maya/route.ts",
+      "src/app/api/portal-pipou/candidatura/route.ts",
+      "src/app/api/webhooks/twilio-status/route.ts",
+      "src/app/pessoas/analytics/actions.ts",
+      "src/app/pessoas/recrutamento/actions.ts",
+      "src/app/pessoas/vagas/actions.ts",
+      "src/app/vagas/actions.ts",
+      "src/lib/pessoas/overview-server.ts"
+    ],
+    "ponto_ahgora_arquivos": [
+      "src/app/api/ponto/ahgora-arquivo/route.ts",
+      "src/lib/pessoas/ahgora-archive.ts"
+    ],
+    "cargos": [
+      "src/app/api/portal-pipou/candidatura/route.ts",
+      "src/app/api/portal-pipou/cargos/route.ts",
+      "src/app/pessoas/cargos-salarios/actions.ts",
+      "src/app/pessoas/recrutamento/actions.ts"
+    ],
+    "kph_insights": [
+      "src/app/pessoas/agentes/[agent]/actions.ts",
+      "src/app/pessoas/agentes/[agent]/page.tsx",
+      "src/app/pessoas/headcount/page.tsx"
+    ],
+    "agent_prompt_versions": [
+      "src/app/pessoas/agentes/[agent]/page.tsx"
+    ],
+    "contatos_kph": [
+      "src/app/pessoas/agentes/[agent]/page.tsx",
+      "src/app/pessoas/recrutamento/actions.ts"
+    ],
+    "kph_learning_proposals": [
+      "src/app/pessoas/agentes/actions-proposals.ts",
+      "src/app/pessoas/agentes/page.tsx"
+    ],
+    "kph_intelligence_scores": [
+      "src/app/pessoas/agentes/page.tsx"
+    ],
+    "absences": [
+      "src/app/pessoas/analytics/actions.ts",
+      "src/app/pessoas/faltas/actions.ts",
+      "src/lib/pessoas/actions.ts",
+      "src/lib/pessoas/orkestri-server.ts",
+      "src/lib/pessoas/overview-server.ts",
+      "src/lib/pessoas/score-monthly.ts"
+    ],
+    "sick_leaves": [
+      "src/app/pessoas/atestados/actions.ts",
+      "src/lib/pessoas/actions.ts"
+    ],
+    "avaliacao_ciclos": [
+      "src/app/pessoas/avaliacoes/9box/page.tsx",
+      "src/app/pessoas/avaliacoes/actions.ts"
+    ],
+    "performance_templates": [
+      "src/app/pessoas/avaliacoes/actions.ts"
+    ],
+    "performance_reviews": [
+      "src/app/pessoas/avaliacoes/actions.ts",
+      "src/lib/pessoas/overview-server.ts"
+    ],
+    "avaliacao_participantes": [
+      "src/app/pessoas/avaliacoes/actions.ts"
+    ],
+    "units": [
+      "src/app/pessoas/avaliacoes/novo/[employeeId]/page.tsx",
+      "src/app/pessoas/layout.tsx",
+      "src/app/pessoas/recrutamento/actions.ts",
+      "src/app/pessoas/vagas/actions.ts",
+      "src/lib/pessoas/access-requests.ts",
+      "src/lib/pessoas/actions.ts",
+      "src/lib/pessoas/document-actions.ts",
+      "src/lib/pessoas/headcount-actions.ts",
+      "src/lib/pessoas/pendencias-server.ts",
+      "lib/kph/auth/unit.ts"
+    ],
+    "feedbacks": [
+      "src/app/pessoas/feedback/actions.ts"
+    ],
+    "gorjeta_periodos": [
+      "src/app/pessoas/gorjetas/actions.ts",
+      "src/lib/pessoas/pendencias-server.ts"
+    ],
+    "gorjeta_dias": [
+      "src/app/pessoas/gorjetas/actions.ts"
+    ],
+    "gorjeta_cargo_pontos": [
+      "src/app/pessoas/gorjetas/actions.ts"
+    ],
+    "gorjeta_distribuicao": [
+      "src/app/pessoas/gorjetas/distribuicao-actions.ts"
+    ],
+    "overtime_records": [
+      "src/app/pessoas/horas-extras/actions.ts",
+      "src/app/pessoas/ponto/actions.ts",
+      "src/lib/pessoas/actions.ts",
+      "src/lib/pessoas/import-actions.ts",
+      "src/lib/pessoas/orkestri-server.ts"
+    ],
+    "user_roles": [
+      "src/app/pessoas/onboarding/actions.ts",
+      "src/app/pessoas/organograma/actions.ts",
+      "src/app/pessoas/pdi/actions.ts",
+      "src/app/pessoas/reunioes/actions.ts",
+      "src/lib/pessoas/pendencias-server.ts",
+      "src/lib/pessoas/ponto-actions.ts",
+      "lib/kph/auth/server.ts"
+    ],
+    "hos_jobs": [
+      "src/app/pessoas/onboarding/actions.ts"
+    ],
+    "hos_runs": [
+      "src/app/pessoas/onboarding/actions.ts"
+    ],
+    "onboarding_templates": [
+      "src/app/pessoas/onboarding/actions.ts",
+      "src/app/pessoas/recrutamento/actions.ts"
+    ],
+    "onboarding_tarefas": [
+      "src/app/pessoas/onboarding/actions.ts"
+    ],
+    "onboarding_runs": [
+      "src/app/pessoas/onboarding/actions.ts",
+      "src/app/pessoas/recrutamento/actions.ts"
+    ],
+    "onboarding_checklist": [
+      "src/app/pessoas/onboarding/actions.ts"
+    ],
+    "pdis": [
+      "src/app/pessoas/pdi/actions.ts"
+    ],
+    "pdi_metas": [
+      "src/app/pessoas/pdi/actions.ts"
+    ],
+    "time_clock_punches": [
+      "src/app/pessoas/ponto/actions.ts",
+      "src/app/pessoas/ponto/gestao/page.tsx",
+      "src/lib/pessoas/actions.ts",
+      "src/lib/pessoas/ponto-actions.ts",
+      "src/lib/pessoas/score-monthly.ts"
+    ],
+    "time_records": [
+      "src/app/pessoas/ponto/actions.ts",
+      "src/lib/pessoas/actions.ts",
+      "src/lib/pessoas/import-actions.ts"
+    ],
+    "punch_adjustment_requests": [
+      "src/app/pessoas/ponto/aprovacoes/actions.ts"
+    ],
+    "job_openings": [
+      "src/app/pessoas/recrutamento/actions.ts",
+      "src/app/pessoas/vagas/actions.ts",
+      "src/app/vagas/[id]/page.tsx",
+      "src/app/vagas/page.tsx",
+      "src/lib/pessoas/headcount-actions.ts",
+      "src/lib/pessoas/orkestri-server.ts",
+      "src/lib/pessoas/overview-server.ts"
+    ],
+    "candidate_avaliacao": [
+      "src/app/pessoas/recrutamento/actions.ts"
+    ],
+    "candidate_feedback_operacional": [
+      "src/app/pessoas/recrutamento/actions.ts"
+    ],
+    "candidate_pipeline": [
+      "src/app/pessoas/recrutamento/actions.ts"
+    ],
+    "origens_candidato": [
+      "src/app/pessoas/recrutamento/actions.ts"
+    ],
+    "cargo_grupos": [
+      "src/app/pessoas/recrutamento/actions.ts",
+      "src/app/pessoas/vagas/actions.ts"
+    ],
+    "quadro_ideal": [
+      "src/app/pessoas/recrutamento/actions.ts"
+    ],
+    "job_descriptions": [
+      "src/app/pessoas/recrutamento/actions.ts",
+      "src/app/pessoas/vagas/actions.ts"
+    ],
+    "reunioes_1on1": [
+      "src/app/pessoas/reunioes/actions.ts"
+    ],
+    "reuniao_action_items": [
+      "src/app/pessoas/reunioes/actions.ts"
+    ],
+    "training_templates": [
+      "src/app/pessoas/treinamentos/actions.ts"
+    ],
+    "training_records": [
+      "src/app/pessoas/treinamentos/actions.ts",
+      "src/lib/pessoas/overview-server.ts"
+    ],
+    "interviews": [
+      "src/app/pessoas/vagas/actions.ts"
+    ],
+    "brands": [
+      "src/app/pessoas/vagas/actions.ts",
+      "src/lib/eventos/actions.ts",
+      "src/lib/pessoas/actions.ts",
+      "src/lib/pessoas/headcount-actions.ts"
+    ],
+    "notifications": [
+      "src/lib/notifications/actions.ts"
+    ],
+    "access_requests": [
+      "src/lib/pessoas/access-requests.ts"
+    ],
+    "shifts": [
+      "src/lib/pessoas/actions.ts"
+    ],
+    "employee_availability": [
+      "src/lib/pessoas/actions.ts"
+    ],
+    "warnings": [
+      "src/lib/pessoas/actions.ts"
+    ],
+    "score_events": [
+      "src/lib/pessoas/actions.ts",
+      "src/lib/pessoas/score-monthly.ts"
+    ],
+    "tips_records": [
+      "src/lib/pessoas/actions.ts"
+    ],
+    "transport_vouchers": [
+      "src/lib/pessoas/actions.ts"
+    ],
+    "vacations": [
+      "src/lib/pessoas/actions.ts"
+    ],
+    "dependents": [
+      "src/lib/pessoas/actions.ts"
+    ],
+    "time_bank_balance": [
+      "src/lib/pessoas/actions.ts"
+    ],
+    "vacation_schedules": [
+      "src/lib/pessoas/actions.ts",
+      "src/lib/pessoas/overview-server.ts"
+    ],
+    "hour_bank": [
+      "src/lib/pessoas/actions.ts"
+    ],
+    "disciplinary_actions": [
+      "src/lib/pessoas/actions.ts"
+    ],
+    "employee_documents": [
+      "src/lib/pessoas/document-actions.ts",
+      "src/lib/pessoas/overview-server.ts",
+      "src/lib/pessoas/pendencias-server.ts"
+    ],
+    "import_logs": [
+      "src/lib/pessoas/import-actions.ts"
+    ],
+    "ponto_mensal": [
+      "src/lib/pessoas/overview-server.ts",
+      "src/lib/pessoas/pendencias-server.ts",
+      "src/lib/pessoas/ponto-mensal-actions.ts"
+    ],
+    "terminations": [
+      "src/lib/pessoas/overview-server.ts",
+      "src/lib/pessoas/termination-server.ts"
+    ],
+    "payroll_fechamento_periodo": [
+      "src/lib/pessoas/payroll-dominio-actions.ts"
+    ],
+    "payroll_fechamento_linha": [
+      "src/lib/pessoas/payroll-dominio-actions.ts"
+    ],
+    "payroll_dominio_cadastro": [
+      "src/lib/pessoas/payroll-dominio-actions.ts"
+    ]
+  },
+  "rpcs": {
+    "get_cargo_salarios": [
+      "src/app/pessoas/cargos-salarios/actions.ts",
+      "src/app/pessoas/recrutamento/actions.ts"
+    ],
+    "upsert_cargo_salario": [
+      "src/app/pessoas/cargos-salarios/actions.ts"
+    ],
+    "get_survey_results": [
+      "src/app/pessoas/clima/actions.ts",
+      "src/lib/pessoas/overview-server.ts"
+    ],
+    "rpc_payroll_listar_periodos": [
+      "src/app/pessoas/contabilidade/actions.ts"
+    ],
+    "rpc_payroll_coletar_periodo": [
+      "src/app/pessoas/contabilidade/actions.ts"
+    ],
+    "rpc_payroll_listar_fechamento": [
+      "src/app/pessoas/contabilidade/actions.ts"
+    ],
+    "rpc_payroll_espelho_fopag": [
+      "src/app/pessoas/contabilidade/actions.ts"
+    ],
+    "rpc_payroll_upsert_lancamento_manual": [
+      "src/app/pessoas/contabilidade/actions.ts"
+    ],
+    "resolve_punch_adjustment": [
+      "src/app/pessoas/ponto/aprovacoes/actions.ts"
+    ],
+    "get_punches_by_unit": [
+      "src/app/pessoas/ponto/espelho/actions.ts"
+    ],
+    "buscar_talentos": [
+      "src/app/pessoas/recrutamento/actions.ts"
+    ],
+    "get_gap_headcount": [
+      "src/app/pessoas/recrutamento/actions.ts"
+    ],
+    "get_quadro_completo": [
+      "src/app/pessoas/recrutamento/actions.ts"
+    ],
+    "get_organograma": [
+      "src/app/pessoas/recrutamento/actions.ts"
+    ],
+    "upsert_feedback_operacional": [
+      "src/app/pessoas/recrutamento/actions.ts"
+    ],
+    "upsert_avaliacao": [
+      "src/app/pessoas/recrutamento/actions.ts"
+    ],
+    "promover_candidato": [
+      "src/app/pessoas/recrutamento/actions.ts"
+    ],
+    "rpc_payroll_gerar_txt_dominio": [
+      "src/lib/pessoas/payroll-dominio-actions.ts"
+    ]
+  },
+  "buckets": {
+    "candidate-cvs": [
+      "src/app/api/portal-pipou/candidatura/route.ts",
+      "src/app/pessoas/recrutamento/actions.ts",
+      "src/app/vagas/actions.ts"
+    ],
+    "employee-docs": [
+      "src/app/pessoas/atestados/actions.ts"
+    ],
+    "employee-documents": [
+      "src/lib/pessoas/document-actions.ts"
+    ],
+    "ponto-fotos": [
+      "src/lib/pessoas/ponto-actions.ts"
+    ]
+  },
+  "environment": {
+    "MAYA_BACKEND_URL": [
+      "src/app/api/agentes/[agent]/send/route.ts",
+      "src/app/pessoas/recrutamento/actions.ts",
+      "src/lib/pessoas/whatsapp.ts"
+    ],
+    "THEO_BACKEND_URL": [
+      "src/app/api/agentes/[agent]/send/route.ts"
+    ],
+    "GOOGLE_REDIRECT_URI": [
+      "src/app/api/google-auth/callback/route.ts",
+      "src/app/api/google-auth/start/route.ts"
+    ],
+    "GOOGLE_CLIENT_ID": [
+      "src/app/api/google-auth/callback/route.ts",
+      "src/app/api/google-auth/start/route.ts",
+      "src/app/api/google-backfill-meet/route.ts",
+      "src/lib/google/calendar.ts",
+      "src/lib/google/drive.ts"
+    ],
+    "GOOGLE_CLIENT_SECRET": [
+      "src/app/api/google-auth/callback/route.ts",
+      "src/app/api/google-auth/start/route.ts",
+      "src/app/api/google-backfill-meet/route.ts",
+      "src/lib/google/calendar.ts",
+      "src/lib/google/drive.ts"
+    ],
+    "BACKFILL_SECRET": [
+      "src/app/api/google-backfill-meet/route.ts"
+    ],
+    "GOOGLE_REFRESH_TOKEN": [
+      "src/app/api/google-backfill-meet/route.ts",
+      "src/lib/google/calendar.ts",
+      "src/lib/google/drive.ts"
+    ],
+    "GOOGLE_CALENDAR_ID": [
+      "src/app/api/google-backfill-meet/route.ts",
+      "src/lib/google/calendar.ts"
+    ],
+    "NODE_ENV": [
+      "src/app/api/portal-pipou/candidatura/route.ts",
+      "src/app/api/portal-pipou/cargos/route.ts",
+      "src/app/pessoas/agentes/[agent]/page.tsx",
+      "src/lib/tenant.ts"
+    ],
+    "TWILIO_AUTH_TOKEN": [
+      "src/app/api/webhooks/twilio-status/route.ts"
+    ],
+    "NEXT_PUBLIC_SUPABASE_URL": [
+      "src/app/auth/actions.ts",
+      "src/app/auth/login/page.tsx",
+      "src/app/auth/login-action/route.ts",
+      "src/app/auth/set-session/route.ts",
+      "src/app/auth/sign-out/route.ts",
+      "src/middleware.ts",
+      "lib/kph/db/supabase/client.ts",
+      "lib/kph/db/supabase/operations-client.ts",
+      "lib/kph/db/supabase/proxy.ts",
+      "lib/kph/db/supabase/server.ts"
+    ],
+    "NEXT_PUBLIC_SUPABASE_ANON_KEY": [
+      "src/app/auth/actions.ts",
+      "src/app/auth/login/page.tsx",
+      "src/app/auth/login-action/route.ts",
+      "src/app/auth/set-session/route.ts",
+      "src/app/auth/sign-out/route.ts",
+      "src/middleware.ts",
+      "lib/kph/db/supabase/client.ts",
+      "lib/kph/db/supabase/operations-client.ts",
+      "lib/kph/db/supabase/proxy.ts",
+      "lib/kph/db/supabase/server.ts"
+    ],
+    "NEXT_PUBLIC_PESSOAS_URL": [
+      "src/app/pessoas/agentes/[agent]/AgentConversasClient.tsx"
+    ],
+    "ANTHROPIC_API_KEY": [
+      "src/app/pessoas/agentes/[agent]/actions.ts",
+      "src/app/pessoas/recrutamento/actions.ts",
+      "src/app/pessoas/vagas/actions.ts"
+    ],
+    "TWILIO_WELCOME_TEMPLATE_SID": [
+      "src/app/pessoas/recrutamento/actions.ts"
+    ],
+    "TWILIO_STATUS_CALLBACK_URL": [
+      "src/app/pessoas/recrutamento/actions.ts",
+      "src/lib/pessoas/whatsapp.ts"
+    ],
+    "CURRICULO_PARSING_MODEL": [
+      "src/app/pessoas/recrutamento/actions.ts",
+      "src/app/pessoas/vagas/actions.ts"
+    ],
+    "NEXT_PUBLIC_APP_URL": [
+      "src/app/pessoas/recrutamento/actions.ts",
+      "src/lib/pessoas/actions.ts",
+      "src/lib/tenant.ts"
+    ],
+    "VERCEL_PROJECT_PRODUCTION_URL": [
+      "src/app/pessoas/recrutamento/actions.ts"
+    ],
+    "NEXT_PUBLIC_MAYA_URL": [
+      "src/components/pessoas/AgentesKPH.jsx"
+    ],
+    "NEXT_PUBLIC_THEO_URL": [
+      "src/components/pessoas/AgentesKPH.jsx"
+    ],
+    "NEXT_PUBLIC_TENANT_NAME": [
+      "src/lib/tenant.ts"
+    ],
+    "NEXT_PUBLIC_APP_NAME": [
+      "src/lib/tenant.ts"
+    ],
+    "NEXT_PUBLIC_RECOVERY_URL": [
+      "src/lib/tenant.ts"
+    ],
+    "NEXT_PUBLIC_PORTAL_URL": [
+      "src/lib/tenant.ts"
+    ],
+    "OPERATIONS_SUPABASE_URL": [
+      "lib/kph/db/supabase/operations-client.ts"
+    ],
+    "OPERATIONS_SUPABASE_SERVICE_KEY": [
+      "lib/kph/db/supabase/operations-client.ts"
+    ],
+    "SUPABASE_SERVICE_ROLE_KEY": [
+      "lib/kph/db/supabase/operations-client.ts",
+      "lib/kph/db/supabase/server.ts"
+    ],
+    "OPERATIONS_SUPABASE_ANON_KEY": [
+      "lib/kph/db/supabase/operations-client.ts"
+    ],
+    "NEXT_PUBLIC_SHELL_URL": [
+      "lib/kph/ui/Sidebar.tsx"
+    ]
+  },
+  "routes": [
+    "src/app/api/agentes/[agent]/send/route.ts",
+    "src/app/api/agentes/[agent]/status/route.ts",
+    "src/app/api/google-auth/callback/route.ts",
+    "src/app/api/google-auth/start/route.ts",
+    "src/app/api/google-backfill-meet/route.ts",
+    "src/app/api/gorjetas/recibo/route.ts",
+    "src/app/api/holerites/pdf/route.ts",
+    "src/app/api/pessoas/agentes/metrics/route.ts",
+    "src/app/api/pessoas/recrutamento/sync-maya/route.ts",
+    "src/app/api/ponto/ahgora-arquivo/route.ts",
+    "src/app/api/portal-pipou/candidatura/route.ts",
+    "src/app/api/portal-pipou/cargos/route.ts",
+    "src/app/api/webhooks/twilio-status/route.ts",
+    "src/app/auth/login/page.tsx",
+    "src/app/auth/login-action/route.ts",
+    "src/app/auth/set-session/route.ts",
+    "src/app/auth/sign-out/route.ts",
+    "src/app/cadastro/page.tsx",
+    "src/app/page.tsx",
+    "src/app/pessoas/agentes/[agent]/page.tsx",
+    "src/app/pessoas/agentes/page.tsx",
+    "src/app/pessoas/analytics/page.tsx",
+    "src/app/pessoas/aprovacoes/page.tsx",
+    "src/app/pessoas/atestados/page.tsx",
+    "src/app/pessoas/avaliacoes/9box/page.tsx",
+    "src/app/pessoas/avaliacoes/ciclos/[id]/page.tsx",
+    "src/app/pessoas/avaliacoes/ciclos/novo/page.tsx",
+    "src/app/pessoas/avaliacoes/ciclos/page.tsx",
+    "src/app/pessoas/avaliacoes/novo/[employeeId]/page.tsx",
+    "src/app/pessoas/avaliacoes/page.tsx",
+    "src/app/pessoas/avaliacoes/templates/[id]/page.tsx",
+    "src/app/pessoas/avaliacoes/templates/novo/page.tsx",
+    "src/app/pessoas/avaliacoes/templates/page.tsx",
+    "src/app/pessoas/banco-de-horas/page.tsx",
+    "src/app/pessoas/cargos-salarios/page.tsx",
+    "src/app/pessoas/clima/[id]/resultados/page.tsx",
+    "src/app/pessoas/clima/nova/page.tsx",
+    "src/app/pessoas/clima/page.tsx",
+    "src/app/pessoas/colaboradores/[id]/editar/page.tsx",
+    "src/app/pessoas/colaboradores/[id]/page.tsx",
+    "src/app/pessoas/colaboradores/novo/page.tsx",
+    "src/app/pessoas/colaboradores/page.tsx",
+    "src/app/pessoas/contabilidade/page.tsx",
+    "src/app/pessoas/disciplina/page.tsx",
+    "src/app/pessoas/documentos/page.tsx",
+    "src/app/pessoas/escala/page.tsx",
+    "src/app/pessoas/faltas/page.tsx",
+    "src/app/pessoas/feedback/novo/page.tsx",
+    "src/app/pessoas/feedback/page.tsx",
+    "src/app/pessoas/ferias/page.tsx",
+    "src/app/pessoas/gorjetas/page.tsx",
+    "src/app/pessoas/headcount/page.tsx",
+    "src/app/pessoas/holerites/[id]/page.tsx",
+    "src/app/pessoas/holerites/page.tsx",
+    "src/app/pessoas/horas-extras/page.tsx",
+    "src/app/pessoas/importacao/page.tsx",
+    "src/app/pessoas/importacao-massa/page.tsx",
+    "src/app/pessoas/onboarding/[id]/page.tsx",
+    "src/app/pessoas/onboarding/novo/page.tsx",
+    "src/app/pessoas/onboarding/page.tsx",
+    "src/app/pessoas/onboarding/templates/novo/page.tsx",
+    "src/app/pessoas/onboarding/templates/page.tsx",
+    "src/app/pessoas/organograma/configurar/page.tsx",
+    "src/app/pessoas/organograma/page.tsx",
+    "src/app/pessoas/orkestri/page.tsx",
+    "src/app/pessoas/page.tsx",
+    "src/app/pessoas/pdi/[id]/page.tsx",
+    "src/app/pessoas/pdi/novo/page.tsx",
+    "src/app/pessoas/pdi/page.tsx",
+    "src/app/pessoas/pendencias/page.tsx",
+    "src/app/pessoas/ponto/aprovacoes/page.tsx",
+    "src/app/pessoas/ponto/espelho/page.tsx",
+    "src/app/pessoas/ponto/gestao/page.tsx",
+    "src/app/pessoas/ponto/page.tsx",
+    "src/app/pessoas/ponto/resumo/page.tsx",
+    "src/app/pessoas/recrutamento/[id]/page.tsx",
+    "src/app/pessoas/recrutamento/banco-talentos/page.tsx",
+    "src/app/pessoas/recrutamento/importar-cvs/page.tsx",
+    "src/app/pessoas/recrutamento/page.tsx",
+    "src/app/pessoas/recrutamento/quadro-ideal/page.tsx",
+    "src/app/pessoas/relatorio-ponto/page.tsx",
+    "src/app/pessoas/reunioes/[id]/page.tsx",
+    "src/app/pessoas/reunioes/nova/page.tsx",
+    "src/app/pessoas/reunioes/page.tsx",
+    "src/app/pessoas/treinamentos/[id]/page.tsx",
+    "src/app/pessoas/treinamentos/novo/page.tsx",
+    "src/app/pessoas/treinamentos/page.tsx",
+    "src/app/pessoas/vagas/page.tsx",
+    "src/app/pessoas/vale-transporte/page.tsx",
+    "src/app/vagas/[id]/page.tsx",
+    "src/app/vagas/page.tsx",
+    "src/app/vagas/sucesso/page.tsx"
+  ],
+  "notes": [
+    "Static inventory only; dynamic table/RPC/bucket names, embedded relationships and SQL dependencies require catalog review.",
+    "No source customer records, credentials, users, storage objects or operational migrations are included."
+  ]
+}

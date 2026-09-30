@@ -38,3 +38,20 @@ Novos registros recebem status `banco_talentos` e origem `manual`. Não são cri
 Após relato de leitura por quase dez minutos, o parser de CSV/Excel foi movido para um Web Worker. A tela oferece **Cancelar leitura** e encerra o worker após 90 segundos, orientando exportação da aba em CSV UTF-8 ou análise do arquivo pelo suporte. Cancelamento, erro e tempo excedido liberam nova tentativa, inclusive com o mesmo arquivo. Nenhuma dessas etapas grava candidatos.
 
 Oito testes automatizados passaram, incluindo leitura XLSX de 10.001 candidatos no parser do worker e tratamento de erros/limites/fórmulas. O arquivo real relatado não foi disponibilizado; a causa específica do travamento não está confirmada. As evidências anteriores de importação completa referem-se à versão anterior do leitor.
+
+## Base real Cardoso — carga de 30/09/2026
+
+Fonte: segundo e-mail do Thiago, “RE: PROJETO R&S - MODELO DE PLANILHAS”, recebido às 12:21 (São Paulo). Arquivo real e dados pessoais ficam fora do repositório público.
+
+- 21.782 linhas preservadas: AGENDA 848, EXTERNO 1.610 e INTERNO 19.324.
+- 16.936 cadastros: 16.010 identidades por CPF validado e 926 registros separados com identidade a conferir.
+- 12.996 cadastros consolidados sem telefone válido. Ausência de contato não exclui o cadastro.
+- Origem e vínculos profissionais permanecem em `talent_source_records`, com aba, linha, código de empresa e todos os campos preenchidos da linha. Consulta no perfil, em “Histórico da base importada”.
+- Critérios auxiliares, inferência de sexo, pareceres DEJUR e resultados antigos não são aplicados como decisões de seleção. Nenhum candidato foi contratado, reprovado ou notificado durante a importação.
+- CPF válido concilia pessoas; telefone sozinho nunca une registros. Preferência de preenchimento: AGENDA, EXTERNO, INTERNO. Campos divergentes são mantidos nas fontes; os dados principais usam a primeira ocorrência disponível. Cargo histórico importado não confirma interesse atual.
+- CARDOSO LTDA é a unidade responsável pela base; os 434 códigos de empresa de origem não foram convertidos em unidades fictícias.
+- Operação pelo script `scripts/import-source-bank.mjs FILE`: simulação padrão; `--commit` grava no projeto Cardoso explicitamente validado. IDs determinísticos e inserções que preservam registros existentes permitem repetir o mesmo arquivo sem duplicá-lo. Não é sincronização de alterações ou atualização automática de bases futuras.
+- O importador simples da interface continua separado: futuras planilhas no formato completo exigem o importador de fontes, não o upload simples.
+- Run: `18fd7c1e-7fa9-5234-ab6b-9011ce2138f2`. Banco validado: 16.936 candidatos, 21.782 fontes, zero fontes órfãs. Sessão SQL autenticada do Thiago enxerga ambos os totais e a carga concluída.
+- Testes: CPF repetido com múltiplos vínculos, telefone compartilhado, ausência de contato, CPF inválido, cabeçalhos deslocados e repetição determinística. TypeScript aprovado.
+- Publicação `dpl_6171ooVe2SPbbx5yCySCDtReVmWm` pronta. Interface verificada com a sessão do Thiago: total 16.936, resumo 21.782 fontes, perfil com campos originais expandidos e fila de 926 identidades pendentes. Fontes negam leitura anônima e escrita por clientes autenticados.

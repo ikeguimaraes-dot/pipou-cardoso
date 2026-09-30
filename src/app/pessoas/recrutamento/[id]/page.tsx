@@ -1,5 +1,6 @@
 import { requireRole } from "@kph/auth/server";
 import { getCandidato, getAvaliacao, getAgendamentos, getFeedbackOperacional } from "../actions";
+import { SourceHistory } from "../SourceHistory";
 import { notFound } from "next/navigation";
 import { CandidatoClient } from "./CandidatoClient";
 import "../recruitment.css";
@@ -42,8 +43,10 @@ export default async function CandidatoPage({ params }: { params: Promise<{ id: 
         <a href="#perfil">Perfil e contato</a>
         <a href="#curriculo">Currículo</a>
         <a href="#historico">Histórico</a>
+        <a href="#fontes-importadas">Fontes importadas</a>
       </nav>
 
+      <SourceHistory candidateId={id} />
       <CandidatoClient
         candidato={candidato}
         avaliacao={avaliacao}

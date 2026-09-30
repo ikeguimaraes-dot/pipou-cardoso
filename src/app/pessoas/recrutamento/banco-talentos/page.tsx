@@ -1,5 +1,6 @@
 import { requireRole } from "@kph/auth/server";
 import { buscarTalentos, getNovosBancoCount } from "../actions";
+import { SourceBankSummary } from "../SourceHistory";
 import { BancoTalentosClient } from "./BancoTalentosClient";
 
 export const dynamic = "force-dynamic";
@@ -67,6 +68,7 @@ export default async function BancoTalentosPage() {
         </div>
       </header>
 
+      <SourceBankSummary />
       <BancoTalentosClient talentos={inicial} totalInicial={total} />
     </div>
   );

@@ -1,5 +1,5 @@
 "use client";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { importTalentBatch } from "./actions";
 import { readBulkCsv, bulkCsv } from "@/lib/pessoas/bulk-model";
 import { TALENT_FIELDS, TALENT_FILE_BYTES, TALENT_FILE_ROWS, TALENT_BATCH_ROWS, planTalentFile, guessTalentColumns, type TalentPlan, type TalentIssue } from "@/lib/pessoas/talent-import";
@@ -19,10 +19,15 @@ export function TalentImportClient({units}:{units:{id:string;name:string}[]}) {
   const [done,setDone] = useState(false);
   const [totals,setTotals] = useState({created:0,skipped:0});
   const stop = useRef(false);
+  const feedback = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    if (error || (!busy && plan?.issues.length)) feedback.current?.focus();
+  }, [error, busy, plan]);
   const style = "rounded-lg border border-[var(--border)] bg-[var(--surface)] p-3";
   function clear() {setReport([]);setPlan(null);setChecked(false);setDone(false);setError("");setMessage("");setProgress(0);setTotals({created:0,skipped:0});}
   async function read(file?:File) {
     clear();setSheets({});setSheetName("");if(!file)return;
+    setMessage("Lendo a planilha… Aguarde antes de conferir a prévia.");
     setBusy(true);
     try {
       if(file.size>TALENT_FILE_BYTES) throw Error("Limite de 10 MB por arquivo.");
@@ -48,7 +53,12 @@ export function TalentImportClient({units}:{units:{id:string;name:string}[]}) {
     finally {setBusy(false);}
   }
   async function run(commit:boolean) {
-    setBusy(true);setError("");setProgress(0);stop.current=false;
+    setError("");
+    if (!unitId) {setError("Selecione a unidade responsável pelos candidatos antes de conferir a prévia.");return;}
+    if (!sheetName) {setError("Selecione um arquivo CSV ou Excel e aguarde a leitura antes de conferir a prévia.");return;}
+    setBusy(true);setMessage(commit?"Preparando a importação…":"Validando as colunas e os contatos…");setProgress(0);stop.current=false;
+    feedback.current?.scrollIntoView({block:"center",behavior:"smooth"});
+    await new Promise<void>(resolve=>setTimeout(resolve,0));
     if(!commit) {setChecked(false);setDone(false);setTotals({created:0,skipped:0});}
     let created=0,skipped=0;
     try {
@@ -92,11 +102,13 @@ export function TalentImportClient({units}:{units:{id:string;name:string}[]}) {
     {Object.keys(sheets).length>1&&<><label htmlFor="initial-sheet">Aba da planilha</label><select id="initial-sheet" className={style} value={sheetName} disabled={busy} onChange={e=>{setSheetName(e.target.value);setMapping(guessTalentColumns(sheets[e.target.value]?.[0]??[]));clear();}}>{Object.keys(sheets).map(name=><option key={name}>{name}</option>)}</select></>}
     <p className="text-sm">Mapeie Nome completo e pelo menos E-mail ou Telefone com DDD. Colunas marcadas como Ignorar não serão importadas. E-mails ou telefones repetidos são preservados sem sobrescrever cadastros existentes. Cada lote é salvo separadamente; mantenha esta página aberta até concluir.</p>
     {!!sheets[sheetName]?.length&&<fieldset className={style} disabled={busy}><legend className="px-2 font-semibold">Correspondência das colunas</legend><div className="grid gap-3 sm:grid-cols-2">{(sheets[sheetName]?.[0]??[]).map((header,i)=><label className="grid gap-1" key={i}>{header||`Coluna ${i+1}`}<select aria-label={`Destino da coluna ${header||i+1}`} className={style} value={mapping[i]??""} onChange={e=>{setMapping(old=>old.map((f,j)=>i===j?e.target.value:f));clear();}}><option value="">Ignorar coluna</option>{Object.entries(TALENT_FIELDS).map(([value,label])=><option key={value} value={value}>{label}</option>)}</select></label>)}</div></fieldset>}
-    <div className="flex flex-wrap gap-3"><button className={style} disabled={busy||!unitId||!sheetName} onClick={()=>void run(false)}>Conferir prévia</button>
+    <div className="flex flex-wrap gap-3"><button className={style} disabled={busy} onClick={()=>void run(false)}>{busy?"Processando…":"Conferir prévia"}</button>
     {checked&&!done&&<button className="rounded-lg bg-[var(--brand)] p-3 font-semibold text-black" disabled={busy||totals.created===0} onClick={()=>void run(true)}>Confirmar importação de {totals.created} candidatos</button>}
     {busy&&plan&&<button className={style} onClick={()=>{stop.current=true;setMessage("Pausa solicitada. Aguardando o lote em andamento terminar.");}}>Pausar após este lote</button>}</div>
-    <p role="status" aria-live="polite">{message}</p>
-    {error&&<p role="alert">{error}</p>}
+    <div ref={feedback} tabIndex={-1} className="rounded-lg border border-[var(--border)] p-4 focus:outline-2 focus:outline-[var(--brand)]">
+      <p role="status" aria-live="polite">{message || "Selecione a unidade e o arquivo. Depois, confira a prévia."}</p>
+      {error&&<p role="alert" className="mt-2 font-semibold">{error}</p>}
+    </div>
     {!!plan?.rows.length&&<div><progress className="w-full accent-[var(--brand)]" aria-label="Lotes processados" max={Math.ceil(plan.rows.length/TALENT_BATCH_ROWS)} value={progress}/><p className="text-sm">{progress} de {Math.ceil(plan.rows.length/TALENT_BATCH_ROWS)} lotes · {plan.total.toLocaleString("pt-BR")} registros no arquivo</p></div>}
     {!!report.length&&<button className="text-left underline" onClick={downloadIssues}>Baixar relatório por linha</button>}
     {!!plan?.issues.length&&<section className={style}><h2 className="font-semibold">{plan.issues.length} problemas para corrigir</h2><button className="my-3 underline" onClick={downloadIssues}>Baixar relatório completo de erros</button><ul>{plan.issues.slice(0,20).map((issue,i)=><li key={i}>Linha {issue.line}: {issue.message}</li>)}</ul></section>}

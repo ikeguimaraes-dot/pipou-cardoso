@@ -32,3 +32,9 @@ Novos registros recebem status `banco_talentos` e origem `manual`. Não são cri
 - Navegador no domínio publicado: login administrativo, leitura de Excel com 9.541.404 bytes e aba de 10.001 linhas; prévia sem escrita e confirmação de 201 candidatos em três lotes; nova prévia reconheceu todos os 201 existentes.
 - Dados, marca e unidade sintéticos do teste de interface removidos após a conferência.
 - Migrations mantêm controle administrativo explícito, execução como chamador, verificação de unidade ativa, limite do lote, proteção da conferência/gravação contra escritores concorrentes e inserção em uma operação por lote.
+
+## Leitura sem bloqueio da tela — 30/09/2026
+
+Após relato de leitura por quase dez minutos, o parser de CSV/Excel foi movido para um Web Worker. A tela oferece **Cancelar leitura** e encerra o worker após 90 segundos, orientando exportação da aba em CSV UTF-8 ou análise do arquivo pelo suporte. Cancelamento, erro e tempo excedido liberam nova tentativa, inclusive com o mesmo arquivo. Nenhuma dessas etapas grava candidatos.
+
+Oito testes automatizados passaram, incluindo leitura XLSX de 10.001 candidatos no parser do worker e tratamento de erros/limites/fórmulas. O arquivo real relatado não foi disponibilizado; a causa específica do travamento não está confirmada. As evidências anteriores de importação completa referem-se à versão anterior do leitor.

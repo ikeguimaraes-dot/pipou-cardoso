@@ -1,5 +1,5 @@
 const {test}=require('node:test'),assert=require('node:assert/strict'),fs=require('node:fs'),path=require('node:path'),vm=require('node:vm'),ts=require('typescript');
-function load(file,mocks={},cache={}){if(cache[file])return cache[file].exports;const module={exports:{}};cache[file]=module;const code=ts.transpileModule(fs.readFileSync(path.resolve(__dirname,'..',file),'utf8'),{compilerOptions:{module:ts.ModuleKind.CommonJS,target:ts.ScriptTarget.ES2022}}).outputText;vm.runInNewContext(code,{module,exports:module.exports,Date,Intl,console,require(name){if(name in mocks)return mocks[name];if(name==='zod')return require('zod');if(name==='server-only')return {};if(name.startsWith('@/'))return load('src/'+name.slice(2)+'.ts',mocks,cache);if(name.startsWith('.'))return load(path.join(path.dirname(file),name)+'.ts',mocks,cache);throw Error(name)}});return module.exports;}
+function load(file,mocks={},cache={}){if(cache[file])return cache[file].exports;const module={exports:{}};cache[file]=module;const code=ts.transpileModule(fs.readFileSync(path.resolve(__dirname,'..',file),'utf8'),{compilerOptions:{module:ts.ModuleKind.CommonJS,target:ts.ScriptTarget.ES2022}}).outputText;vm.runInNewContext(code,{module,exports:module.exports,Date,Intl,console,Error,self:mocks.__self,require(name){if(name in mocks)return mocks[name];if(name==='zod'||name==='xlsx')return require(name);if(name==='server-only')return {};if(name.startsWith('@/'))return load('src/'+name.slice(2)+'.ts',mocks,cache);if(name.startsWith('.'))return load(path.join(path.dirname(file),name)+'.ts',mocks,cache);throw Error(name)}});return module.exports;}
 
 const {planTalentFile,guessTalentColumns,normalizeTalentPhone,TALENT_BATCH_ROWS}=load('src/lib/pessoas/talent-import.ts');
 test('maps common Portuguese headers and ignores unknown columns',()=>{
@@ -32,4 +32,30 @@ test('server enforces admin, row limit, strict fields and normalizes before RPC'
  assert.equal((await f.api.importTalentBatch({...input,rows:Array(101).fill(input.rows[0])})).ok,false);
  assert.equal((await f.api.importTalentBatch({...input,rows:[{...input.rows[0],status:'contratado'}]})).ok,false);assert.equal(f.calls,1);
  await assert.rejects(fixture(true).api.importTalentBatch(input));
+});
+
+function reader() {
+ let response;
+ const scope={postMessage(data){response=data}};
+ load('src/app/pessoas/recrutamento/importar-planilha/reader.worker.ts',{__self:scope});
+ return async file=>{await scope.onmessage({data:file});return response};
+}
+test('worker reads 10001 XLSX candidates, preserving headers and final row',async()=>{
+ const XLSX=require('xlsx');
+ const matrix=[['Nome','Email'],...Array.from({length:10001},(_,i)=>['Pessoa '+i,`candidate${i}@example.invalid`])];
+ const workbook=XLSX.utils.book_new();XLSX.utils.book_append_sheet(workbook,XLSX.utils.aoa_to_sheet(matrix),'Base');
+ const bytes=XLSX.write(workbook,{type:'buffer',bookType:'xlsx'});
+ const result=await reader()({name:'base.xlsx',size:bytes.length,arrayBuffer:async()=>bytes});
+ assert.equal(result.error,undefined);assert.equal(result.sheets.Base.length,10002);assert.equal(result.sheets.Base.at(-1)[0],'Pessoa 10000');
+});
+test('worker returns actionable errors for corrupt Excel, formulas and oversized CSV',async()=>{
+ const read=reader();
+ assert.match((await read({name:'base.xlsx',size:1,arrayBuffer:async()=>{throw Error('Arquivo ilegível')}})).error,/ilegível/);
+ assert.match((await read({name:'base.csv',size:11*1024*1024})).error,/10 MB/);
+ assert.match((await read({name:'base.csv',size:10,text:async()=>Array(25003).fill('Nome;Email').join('\n')})).error,/25.000/);
+ const XLSX=require('xlsx'),book=XLSX.utils.book_new();
+ const sheet=XLSX.utils.aoa_to_sheet([['Nome','Email'],['Pessoa','p@example.invalid']]);sheet.A2.f='1+1';
+ XLSX.utils.book_append_sheet(book,sheet,'Base');
+ const bytes=XLSX.write(book,{type:'buffer',bookType:'xlsx'});
+ assert.match((await read({name:'base.xlsx',size:bytes.length,arrayBuffer:async()=>bytes})).error,/fórmulas/);
 });

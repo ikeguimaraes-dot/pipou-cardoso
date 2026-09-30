@@ -1,7 +1,7 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
 import { importTalentBatch } from "./actions";
-import { readBulkCsv, bulkCsv } from "@/lib/pessoas/bulk-model";
+import { bulkCsv } from "@/lib/pessoas/bulk-model";
 import { TALENT_FIELDS, TALENT_FILE_BYTES, TALENT_FILE_ROWS, TALENT_BATCH_ROWS, planTalentFile, guessTalentColumns, type TalentPlan, type TalentIssue } from "@/lib/pessoas/talent-import";
 
 export function TalentImportClient({units}:{units:{id:string;name:string}[]}) {
@@ -19,6 +19,9 @@ export function TalentImportClient({units}:{units:{id:string;name:string}[]}) {
   const [done,setDone] = useState(false);
   const [totals,setTotals] = useState({created:0,skipped:0});
   const stop = useRef(false);
+  const cancelRead = useRef<(() => void) | null>(null);
+  const [reading,setReading] = useState(false);
+  useEffect(() => () => cancelRead.current?.(), []);
   const feedback = useRef<HTMLDivElement>(null);
   useEffect(() => {
     if (error || (!busy && plan?.issues.length)) feedback.current?.focus();
@@ -27,30 +30,35 @@ export function TalentImportClient({units}:{units:{id:string;name:string}[]}) {
   function clear() {setReport([]);setPlan(null);setChecked(false);setDone(false);setError("");setMessage("");setProgress(0);setTotals({created:0,skipped:0});}
   async function read(file?:File) {
     clear();setSheets({});setSheetName("");if(!file)return;
-    setMessage("Lendo a planilha… Aguarde antes de conferir a prévia.");
-    setBusy(true);
+    setMessage("Lendo a planilha em segundo plano… Você pode cancelar a leitura.");
+    setBusy(true);setReading(true);
     try {
       if(file.size>TALENT_FILE_BYTES) throw Error("Limite de 10 MB por arquivo.");
-      let next:Record<string,string[][]>;
-      if(/\.csv$/i.test(file.name)) next={"CSV":readBulkCsv(await file.text())};
-      else if(/\.xlsx$/i.test(file.name)) {
-        const XLSX=await import("xlsx");
-        const workbook=XLSX.read(await file.arrayBuffer(),{type:"array",cellDates:true,sheetRows:TALENT_FILE_ROWS+2});
-        if(workbook.SheetNames.length>20) throw Error("Use um arquivo com até 20 abas ou salve a aba desejada como CSV.");
-        next={};
-        for(const name of workbook.SheetNames) {
-          const sheet=workbook.Sheets[name];if(!sheet)continue;
-          const range=XLSX.utils.decode_range(sheet["!fullref"] ?? sheet["!ref"] ?? "A1");
-          if(range.e.r>TALENT_FILE_ROWS || range.e.c>50) throw Error("Uma aba excede 25.000 linhas de dados ou 51 colunas. Remova áreas extras ou exporte apenas a aba desejada.");
-          if(Object.values(sheet).some(cell=>cell && typeof cell==="object" && "f" in cell)) throw Error("A planilha contém fórmulas. Salve uma cópia somente com os valores antes de importar.");
-          next[name]=XLSX.utils.sheet_to_json<string[]>(sheet,{header:1,raw:false,defval:"",blankrows:true,dateNF:"yyyy-mm-dd"});
-        }
-      } else throw Error("Selecione CSV UTF-8 ou Excel .xlsx.");
+      if(!/\.(csv|xlsx)$/i.test(file.name)) throw Error("Selecione CSV UTF-8 ou Excel .xlsx.");
+      const next = await new Promise<Record<string,string[][]>>((resolve,reject) => {
+        const worker = new Worker(new URL("./reader.worker.ts", import.meta.url), {type:"module"});
+        let settled = false;
+        const finish = (error?: string, sheets?: Record<string,string[][]>) => {
+          if(settled)return;
+          settled=true;clearTimeout(timer);worker.terminate();cancelRead.current=null;
+          if(error)reject(new Error(error));else resolve(sheets!);
+        };
+        const timer = setTimeout(() => finish("A leitura excedeu 90 segundos e foi interrompida. Nenhum candidato foi gravado. Salve a aba desejada como CSV UTF-8 ou envie o arquivo ao suporte para análise."),90_000);
+        cancelRead.current=()=>finish("Leitura cancelada. Nenhum candidato foi gravado. Selecione o arquivo para tentar novamente.");
+        worker.onmessage=(event: MessageEvent<{sheets?:Record<string,string[][]>;error?:string}>)=> {
+          if(event.data.error)finish(event.data.error);
+          else if(event.data.sheets)finish(undefined,event.data.sheets);
+          else finish("Resposta de leitura inválida. Tente novamente.");
+        };
+        worker.onerror=()=>finish("Não foi possível iniciar ou concluir a leitura. Atualize a página e tente novamente, ou salve a aba como CSV UTF-8.");
+        worker.onmessageerror=()=>finish("Não foi possível receber os dados da planilha. Tente usar CSV UTF-8.");
+        worker.postMessage(file);
+      });
       const first=Object.keys(next)[0];if(!first)throw Error("Arquivo sem planilha.");
       setSheets(next);setSheetName(first);setMapping(guessTalentColumns(next[first]?.[0]??[]));
       setMessage("Arquivo lido. Selecione a unidade e confira a prévia antes de gravar.");
-    } catch(e) {setError(e instanceof Error?e.message:"Não foi possível ler o arquivo.");}
-    finally {setBusy(false);}
+    } catch(e) {setMessage("Leitura não concluída. Nenhum candidato foi gravado.");setError(e instanceof Error?e.message:"Não foi possível ler o arquivo.");}
+    finally {setBusy(false);setReading(false);}
   }
   async function run(commit:boolean) {
     setError("");
@@ -98,12 +106,13 @@ export function TalentImportClient({units}:{units:{id:string;name:string}[]}) {
     <p className="text-sm text-[var(--muted)]">Os registros entram no Banco de Talentos, sem vincular vaga, criar colaboradores ou enviar mensagens aos candidatos.</p>
     <a className="text-[var(--brand)]" download="modelo-candidatos.csv" href={`data:text/csv;charset=utf-8,${encodeURIComponent('\uFEFF'+Object.keys(TALENT_FIELDS).join(';')+'\r\n')}`}>Baixar modelo de colunas</a>
     <label htmlFor="initial-unit">Unidade</label><select id="initial-unit" className={style} disabled={busy} value={unitId} onChange={e=>{setUnit(e.target.value);clear();}}><option value="">Selecione</option>{units.map(u=><option key={u.id} value={u.id}>{u.name}</option>)}</select>
-    <label htmlFor="initial-file">Arquivo CSV UTF-8 ou Excel</label><input id="initial-file" type="file" accept=".csv,.xlsx" disabled={busy} onChange={e=>void read(e.target.files?.[0])}/>
+    <label htmlFor="initial-file">Arquivo CSV UTF-8 ou Excel</label><input id="initial-file" type="file" accept=".csv,.xlsx" disabled={busy} onChange={e=>{const file=e.target.files?.[0];e.target.value="";void read(file);}}/>
     {Object.keys(sheets).length>1&&<><label htmlFor="initial-sheet">Aba da planilha</label><select id="initial-sheet" className={style} value={sheetName} disabled={busy} onChange={e=>{setSheetName(e.target.value);setMapping(guessTalentColumns(sheets[e.target.value]?.[0]??[]));clear();}}>{Object.keys(sheets).map(name=><option key={name}>{name}</option>)}</select></>}
     <p className="text-sm">Mapeie Nome completo e pelo menos E-mail ou Telefone com DDD. Colunas marcadas como Ignorar não serão importadas. E-mails ou telefones repetidos são preservados sem sobrescrever cadastros existentes. Cada lote é salvo separadamente; mantenha esta página aberta até concluir.</p>
     {!!sheets[sheetName]?.length&&<fieldset className={style} disabled={busy}><legend className="px-2 font-semibold">Correspondência das colunas</legend><div className="grid gap-3 sm:grid-cols-2">{(sheets[sheetName]?.[0]??[]).map((header,i)=><label className="grid gap-1" key={i}>{header||`Coluna ${i+1}`}<select aria-label={`Destino da coluna ${header||i+1}`} className={style} value={mapping[i]??""} onChange={e=>{setMapping(old=>old.map((f,j)=>i===j?e.target.value:f));clear();}}><option value="">Ignorar coluna</option>{Object.entries(TALENT_FIELDS).map(([value,label])=><option key={value} value={value}>{label}</option>)}</select></label>)}</div></fieldset>}
     <div className="flex flex-wrap gap-3"><button className={style} disabled={busy} onClick={()=>void run(false)}>{busy?"Processando…":"Conferir prévia"}</button>
     {checked&&!done&&<button className="rounded-lg bg-[var(--brand)] p-3 font-semibold text-black" disabled={busy||totals.created===0} onClick={()=>void run(true)}>Confirmar importação de {totals.created} candidatos</button>}
+    {reading&&<button className={style} onClick={()=>cancelRead.current?.()}>Cancelar leitura</button>}
     {busy&&plan&&<button className={style} onClick={()=>{stop.current=true;setMessage("Pausa solicitada. Aguardando o lote em andamento terminar.");}}>Pausar após este lote</button>}</div>
     <div ref={feedback} tabIndex={-1} className="rounded-lg border border-[var(--border)] p-4 focus:outline-2 focus:outline-[var(--brand)]">
       <p role="status" aria-live="polite">{message || "Selecione a unidade e o arquivo. Depois, confira a prévia."}</p>

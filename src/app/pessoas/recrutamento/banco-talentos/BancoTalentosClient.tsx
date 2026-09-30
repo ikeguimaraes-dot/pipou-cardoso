@@ -2,7 +2,7 @@
 
 import { useState, useRef, useTransition } from "react";
 import { useRouter } from "next/navigation";
-import { Paperclip, Search, X } from "lucide-react";
+import { Search, X } from "lucide-react";
 import { buscarTalentos, moverCandidato } from "../actions";
 import type { TalentoBasic, TalentoFiltros } from "../actions";
 import { ESCOLARIDADE_SLUGS, ESCOLARIDADE_LABEL, TURNOS } from "../curriculo-constants";
@@ -166,7 +166,7 @@ export function BancoTalentosClient({ talentos: inicial, totalInicial }: Props) 
           <Search size={13} style={{ position: "absolute", left: 10, top: "50%", transform: "translateY(-50%)", color: "var(--text-3)", pointerEvents: "none" }} />
           <input
             type="text"
-            placeholder="Nome do candidato..."
+            placeholder="Nome ou CPF do candidato..."
             value={filtros.termo ?? ""}
             onChange={(e) => setFiltro("termo", e.target.value || undefined, true)}
             style={{ ...inputStyle, width: "100%", paddingLeft: 30, boxSizing: "border-box" }}
@@ -270,7 +270,7 @@ export function BancoTalentosClient({ talentos: inicial, totalInicial }: Props) 
           <table style={{ width: "100%", borderCollapse: "collapse", fontSize: 13 }}>
             <thead>
               <tr style={{ borderBottom: "1px solid var(--border)" }}>
-                {["Nome", "Cargo pretendido", "Cidade", "Escolaridade", "Status", "Habilidades", "CV", "Entrada", ""].map((h, i) => (
+                {["Nome", "Função / cargo", "CPF", "Telefone / WhatsApp", "Cidade", "Status", "Ações"].map((h, i) => (
                   <th key={i} style={{ padding: "8px 12px", textAlign: "left", fontSize: 11, fontWeight: 700, color: "var(--text-3)", letterSpacing: 0.5, whiteSpace: "nowrap" }}>
                     {h}
                   </th>
@@ -300,40 +300,21 @@ export function BancoTalentosClient({ talentos: inicial, totalInicial }: Props) 
                       </button>
                     </td>
                     <td style={{ padding: "10px 12px", color: "var(--text-2)" }}>
-                      {t.area_interesse ?? "—"}
+                      {t.area_interesse?.toLocaleUpperCase("pt-BR") || "Não informado"}
+                    </td>
+                    <td style={{ padding: "10px 12px", color: "var(--text-2)", whiteSpace: "nowrap", fontVariantNumeric: "tabular-nums" }}>
+                      {t.cpf ? t.cpf.replace(/^(\d{3})(\d{3})(\d{3})(\d{2})$/, "$1.$2.$3-$4") : <span style={{color:"var(--text-3)"}}>A conferir</span>}
+                    </td>
+                    <td style={{ padding: "10px 12px", whiteSpace: "nowrap", fontVariantNumeric: "tabular-nums" }}>
+                      {t.telefone ? <a href={`tel:${t.telefone}`} style={{color:"var(--text)",textDecoration:"none"}}>{t.telefone.replace(/^(\d{2})(\d{4,5})(\d{4})$/, "($1) $2-$3")}</a> : <span style={{color:"var(--text-3)"}}>Sem telefone</span>}
                     </td>
                     <td style={{ padding: "10px 12px", color: "var(--text-2)", whiteSpace: "nowrap" }}>
                       {t.cidade ?? "—"}
-                    </td>
-                    <td style={{ padding: "10px 12px", color: "var(--text-2)" }}>
-                      {t.escolaridade_nivel ? (ESCOLARIDADE_LABEL[t.escolaridade_nivel] ?? t.escolaridade_nivel) : "—"}
                     </td>
                     <td style={{ padding: "10px 12px" }}>
                       <span style={{ fontSize: 11, fontWeight: 700, padding: "2px 8px", borderRadius: 99, background: `${cfg.cor}20`, color: cfg.cor, whiteSpace: "nowrap" }}>
                         {cfg.label}
                       </span>
-                    </td>
-                    <td style={{ padding: "10px 12px" }}>
-                      <div style={{ display: "flex", gap: 4, flexWrap: "wrap" }}>
-                        {(t.habilidades ?? []).slice(0, 2).map((h) => (
-                          <span key={h} style={{ fontSize: 10, padding: "1px 6px", borderRadius: 99, background: "var(--surface-2)", color: "var(--text-3)", border: "1px solid var(--border)", whiteSpace: "nowrap" }}>
-                            {h}
-                          </span>
-                        ))}
-                        {(t.habilidades?.length ?? 0) > 2 && (
-                          <span style={{ fontSize: 10, color: "var(--text-3)" }}>+{(t.habilidades?.length ?? 0) - 2}</span>
-                        )}
-                      </div>
-                    </td>
-                    <td style={{ padding: "10px 12px" }}>
-                      {t.cv_storage_path && (
-                        <span title="CV anexado" style={{ color: "#2563EB", opacity: 0.7 }}>
-                          <Paperclip size={13} />
-                        </span>
-                      )}
-                    </td>
-                    <td style={{ padding: "10px 12px", color: "var(--text-3)", whiteSpace: "nowrap", fontSize: 12 }}>
-                      {new Date(t.created_at).toLocaleDateString("pt-BR")}
                     </td>
                     <td style={{ padding: "10px 12px" }}>
                       {estaAtivo ? (

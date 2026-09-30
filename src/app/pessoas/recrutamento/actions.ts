@@ -943,6 +943,8 @@ export type TalentoFiltros = {
 export type TalentoBasic = {
   id: string;
   nome: string | null;
+  cpf: string | null;
+  telefone: string | null;
   area_interesse: string | null;
   cidade: string | null;
   escolaridade_nivel: string | null;
@@ -1040,10 +1042,17 @@ export async function buscarTalentos(
       total_count: number;
     }>;
 
+    const { data: contacts, error: contactError } = rows.length
+      ? await (sb as any).from("candidates").select("id,cpf,phone").in("id", rows.map(r => r.id))
+      : { data: [], error: null };
+    if (contactError) throw contactError;
+    const contactById = new Map<string, {cpf:string|null;phone:string|null}>((contacts ?? []).map((r:{id:string;cpf:string|null;phone:string|null}) => [r.id, r]));
     const total = rows.length > 0 ? Number(rows[0]?.total_count ?? 0) : 0;
     const talentos: TalentoBasic[] = rows.map((r) => ({
       id: r.id,
       nome: r.full_name,
+      cpf: contactById.get(r.id)?.cpf ?? null,
+      telefone: contactById.get(r.id)?.phone ?? null,
       area_interesse: r.area_interesse,
       cidade: r.cidade,
       escolaridade_nivel: r.escolaridade_nivel,

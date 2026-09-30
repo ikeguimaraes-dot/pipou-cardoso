@@ -76,6 +76,7 @@ export default async function ImportarCVsPage() {
         </p>
       </header>
 
+      <p style={{marginBottom:20}}>Tem uma base de contatos em Excel ou CSV? <a href="/pessoas/recrutamento/importar-planilha" style={{color:"var(--brand)"}}>Importar planilha com até 25.000 candidatos</a></p>
       <ImportarCVsClient units={optionsR.units} cargosCanon={cargosCanon} />
     </div>
   );

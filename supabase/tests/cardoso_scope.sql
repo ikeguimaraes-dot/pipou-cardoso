@@ -9,6 +9,7 @@ INSERT INTO public.user_roles(user_id,role_id,unit_id) SELECT current_setting('t
 INSERT INTO public.employees(unit_id,nome,sobrenome,funcao,data_admissao)
 VALUES(current_setting('test.a')::uuid,'A','Fixture','TESTE',current_date),(current_setting('test.b')::uuid,'B','Fixture','TESTE',current_date);
 INSERT INTO public.employee_documents(employee_id,tipo,nome) SELECT id,'outros','Fixture' FROM public.employees WHERE unit_id IN(current_setting('test.a')::uuid,current_setting('test.b')::uuid);
+INSERT INTO public.candidates(full_name,unit_id) VALUES('Scoped A',current_setting('test.a')::uuid),('Scoped B',current_setting('test.b')::uuid);
 SELECT set_config('request.jwt.claims',json_build_object('sub',current_setting('test.uid'),'role','authenticated')::text,true);
 SET LOCAL ROLE authenticated;
 DO $$ DECLARE n int; BEGIN
@@ -18,6 +19,12 @@ DO $$ DECLARE n int; BEGIN
  IF n<>1 THEN RAISE EXCEPTION 'Expected one authorized employee, got %',n; END IF;
  SELECT count(*) INTO n FROM public.employee_documents;
  IF n<>1 THEN RAISE EXCEPTION 'Document isolation failed'; END IF;
+ SELECT count(*) INTO n FROM public.candidates;
+ IF n<>1 THEN RAISE EXCEPTION 'Candidate isolation failed'; END IF;
+ BEGIN
+  PERFORM public.cardoso_import_talents(current_setting('test.a')::uuid,'[{"full_name":"Fixture","email":"fixture@example.invalid"}]'::jsonb,true);
+  RAISE EXCEPTION 'Scoped manager imported' USING ERRCODE='P0002';
+ EXCEPTION WHEN insufficient_privilege THEN NULL; END;
  UPDATE public.employees SET nome='FORBIDDEN';
  IF FOUND THEN RAISE EXCEPTION 'Read-only manager wrote employee'; END IF;
  BEGIN

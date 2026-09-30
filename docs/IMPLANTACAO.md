@@ -55,3 +55,7 @@ Nenhum registro operacional, documento, vínculo ou código de folha HOS foi cop
 - CSV inicial destina-se a novos ativos. Salário omitido é zero e requer revisão; desligados e históricos precisam dos respectivos fluxos/mapeamentos.
 
 Consulte [VALIDACAO-IMPLANTACAO.md](VALIDACAO-IMPLANTACAO.md) para evidências. Arquivos reais do cliente não são necessários para continuar testes técnicos, mas são necessários para conciliação e homologação operacional.
+
+## Atualização — 30/09/2026
+
+Importação de candidatos em massa publicada no Banco de Talentos: CSV/Excel até 10 MiB, 25.000 candidatos por aba, mapeamento de colunas, prévia, lotes automáticos de 100, preservação de duplicidades e retomada. Veja [instruções e limites](IMPORTACAO-BANCO-TALENTOS.md). A importação inicial de colaboradores permanece separada.

@@ -27,6 +27,7 @@ export default async function BancoTalentosPage() {
             Recrutamento &amp; Seleção
           </h1>
           <div style={{ display: "flex", gap: 8 }}>
+            <a href="/pessoas/recrutamento/importar-planilha" style={{fontSize:12,color:"var(--brand)",padding:"6px 12px",border:"1px solid var(--border)",borderRadius:8,fontWeight:600}}>Importar planilha</a>
             <a
               href="/pessoas/recrutamento/importar-cvs"
               style={{ fontSize: 12, color: "var(--text-2)", textDecoration: "none", padding: "6px 12px", border: "1px solid var(--border)", borderRadius: 8, fontWeight: 600 }}

@@ -402,6 +402,9 @@
     "promover_candidato": [
       "src/app/pessoas/recrutamento/actions.ts"
     ],
+    "cardoso_import_talents": [
+      "src/app/pessoas/recrutamento/importar-planilha/actions.ts"
+    ],
     "rpc_payroll_gerar_txt_dominio": [
       "src/lib/pessoas/payroll-dominio-actions.ts"
     ],
@@ -649,6 +652,7 @@
     "src/app/pessoas/recrutamento/[id]/page.tsx",
     "src/app/pessoas/recrutamento/banco-talentos/page.tsx",
     "src/app/pessoas/recrutamento/importar-cvs/page.tsx",
+    "src/app/pessoas/recrutamento/importar-planilha/page.tsx",
     "src/app/pessoas/recrutamento/page.tsx",
     "src/app/pessoas/recrutamento/quadro-ideal/page.tsx",
     "src/app/pessoas/relatorio-ponto/page.tsx",
